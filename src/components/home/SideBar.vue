@@ -36,6 +36,7 @@
         <hr class="flex-grow" />
       </div>
       <DetailSearch v-if="isDetailSearch" />
+      <Button class="self-end" variant="outline">검색</Button>
     </section>
   </aside>
 </template>
@@ -46,6 +47,7 @@ import DropDown from '../ui/DropDown.vue'
 import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
 import ArrowUpIcon from '../ui/icons/ArrowUpIcon.vue'
+import { Button } from '../ui/button'
 
 const dropdown = ref(0)
 const isDetailSearch = ref(false)
