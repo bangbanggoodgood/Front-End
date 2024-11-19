@@ -1,5 +1,5 @@
 <template>
-  <header class="flex justify-between items-center py-5 px-8 bg-primary shadow-lg text-white">
+  <header class="flex justify-between items-center py-5 px-8 bg-primary shadow-lg text-white z-50">
     <RouterLink class="text-4xl" :to="{ name: 'home' }">LOGO</RouterLink>
     <div class="text-xl text-white flex gap-4">
       <template v-if="user.name">

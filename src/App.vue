@@ -1,11 +1,11 @@
 <template>
   <Header />
-  <main class="bg-yellow-200 flex-1">
+  <main class="bg-yellow-200 flex-1 flex flex-col">
     <RouterView />
   </main>
 </template>
 <script setup>
-import Header from '@/components/layout/Header.vue'
+import Header from '@/components/layout/HeaderItem.vue'
 import { RouterView } from 'vue-router'
 </script>
 <style scoped>
