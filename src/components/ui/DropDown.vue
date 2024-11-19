@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex justify-between items-center w-full rounded-full bg-background border border-primary h-10 px-2 cursor-pointer"
+    class="relative flex justify-between items-center w-full rounded-full bg-background border border-primary h-10 px-2 cursor-pointer z-50"
     @click.stop="$emit('toggleDropDown')"
   >
     <span class="flex-grow text-center">{{ placeholder }}</span>
@@ -11,7 +11,6 @@
       </div>
       <DropDownList v-else :list="list" @onClick="onClick" />
     </template>
-    <!-- <DropDownList v-if="true" :list="list" @onClick="onClick" /> -->
   </div>
 </template>
 

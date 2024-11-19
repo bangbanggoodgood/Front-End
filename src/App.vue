@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <main class="bg-yellow-200 flex-1 flex flex-col">
+  <main class="flex-1 flex flex-col">
     <RouterView />
   </main>
 </template>
