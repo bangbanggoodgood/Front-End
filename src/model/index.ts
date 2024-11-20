@@ -1,4 +1,4 @@
-import type { infraArray, infraArrayKr } from '@/util/keys/utilKey'
+import type { infraArray, infraArrayKr } from '@/lib/infra'
 
 export interface TUser {
   name: string

@@ -36,7 +36,7 @@
 <script setup lang="ts">
 import type { TApartment, TInfra, TInfraKr } from '@/model'
 import { numberToKrMoney } from '@/util/money'
-import { infraToKr } from '@/util/keys/utilKey'
+import { infraToKr } from '@/lib/infra'
 
 export interface ApartmentInfoTableProps {
   apartment: TApartment
