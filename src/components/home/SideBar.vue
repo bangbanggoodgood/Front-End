@@ -38,29 +38,41 @@
       <DetailSearch v-if="isDetailSearch" />
       <Button class="self-end" variant="outline">검색</Button>
     </section>
-    <section>
-      <h2 class="mb-2 text-xl">검색 결과 ({{ apartments.length }})</h2>
+    <section class="flex flex-col gap-2">
+      <h2 class="text-xl">검색 결과 ({{ apartments.length }})</h2>
       <ul class="flex flex-col gap-5">
         <li v-for="apartment in apartments" :id="apartment.id.toString()">
           <ApartmentCard :apartment="apartment" />
         </li>
       </ul>
+      <OffsetPagination
+        class="mt-2"
+        :totalItem="100"
+        :curPage="curPage"
+        @handleCurPage="handleCurPage"
+      />
     </section>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import DropDown from '../ui/DropDown.vue'
 import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
 import ArrowUpIcon from '../ui/icons/ArrowUpIcon.vue'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
 import ApartmentCard from '../apartment/ApartmentCard.vue'
 import { apartments } from '@/mocks/data'
+import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 
 const dropdown = ref(0)
 const isDetailSearch = ref(false)
+const curPage = ref(1)
+
+watch(curPage, (nv, ov) => {
+  console.log(nv, ov)
+})
 
 const sidoClick = (item: string) => {
   console.log(item)
@@ -79,5 +91,9 @@ const eubmyundongClick = (item: string) => {
 }
 const toggleEubmyundongDropDown = () => {
   dropdown.value = dropdown.value === 3 ? 0 : 3
+}
+
+const handleCurPage = (nextPage: number) => {
+  curPage.value = nextPage
 }
 </script>
