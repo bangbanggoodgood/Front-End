@@ -55,7 +55,7 @@
       </div>
     </section>
     <Transition>
-      <section class="absolute -left-4 translate-x-full h-full">
+      <section class="absolute -left-4 translate-x-full h-[calc(100%-2rem)]">
         <apartment-detail :apartment="apartments[0]" />
       </section>
     </Transition>
