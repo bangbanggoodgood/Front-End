@@ -1,4 +1,4 @@
-import type { infraArray, infraArrayKr } from '@/util/utilKey'
+import type { infraArray, infraArrayKr } from '@/util/keys/utilKey'
 
 export interface TUser {
   name: string
@@ -21,4 +21,11 @@ export interface TApartment {
   maxDealAmount: number
   introduce: string
   like: 0 | 1
+}
+
+export interface TChartItem {
+  month: string
+  nested: {
+    value: number
+  }
 }

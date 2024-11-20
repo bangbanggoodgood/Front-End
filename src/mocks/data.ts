@@ -90,3 +90,23 @@ export const apartments: TApartment[] = [
     like: 1,
   },
 ]
+
+export const generateFiveYearsData = () => {
+  const data: Record<string, number> = {}
+  const currentYear = new Date().getFullYear()
+  const currentMonth = new Date().getMonth()
+  const startYear = currentYear - 5
+
+  for (let year = currentYear; year >= startYear; year--) {
+    for (let month = 12; month >= 1; month--) {
+      if (year === currentYear && month > currentMonth) {
+        continue
+      }
+      const formattedMonth = month.toString().padStart(2, '0')
+      const key = `${year}${formattedMonth}`
+      data[key] = Math.floor(Math.random() * (60000 - 30000 + 1)) + 30000
+    }
+  }
+
+  return data
+}
