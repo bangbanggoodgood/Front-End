@@ -8,7 +8,7 @@
     <div class="w-full h-80">
       <road-view />
     </div>
-    <deal-chart :data="convertDealToChartItems(generateFiveYearsData())" />
+    <deal-chart :data="convertDealToChartItems(3, generateFiveYearsData())" />
   </div>
 </template>
 
