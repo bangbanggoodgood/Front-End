@@ -42,7 +42,11 @@
       <div class="w-[24rem] flex flex-col gap-2">
         <h2 class="text-xl">검색 결과 ({{ apartments.length }})</h2>
         <ul class="flex flex-col gap-5">
-          <li v-for="apartment in apartments" :id="apartment.id.toString()">
+          <li
+            v-for="apartment in apartments"
+            :id="apartment.id.toString()"
+            @click="handleApartmentClick(apartment)"
+          >
             <apartment-card :apartment="apartment" />
           </li>
         </ul>
@@ -56,16 +60,17 @@
     </section>
     <Transition>
       <section
+        v-if="apartment"
         class="absolute -left-8 translate-x-full h-[calc(100%-2rem)] overflow-y-auto rounded-xl"
       >
-        <apartment-detail :apartment="apartments[0]" />
+        <apartment-detail :apartment="apartment" @close-detail="closeDetail" />
       </section>
     </Transition>
   </aside>
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import DropDown from '../ui/DropDown.vue'
 import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
@@ -75,10 +80,12 @@ import ApartmentCard from '@/components/apartment/ApartmentCard.vue'
 import ApartmentDetail from '@/components/apartment/ApartmentDetail.vue'
 import { apartments } from '@/mocks/data'
 import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
+import type { TApartment } from '@/model'
 
 const dropdown = ref(0)
 const isDetailSearch = ref(false)
 const curPage = ref(1)
+const apartment: Ref<TApartment | null> = ref(null)
 
 watch(curPage, (nv, ov) => {
   console.log(nv, ov)
@@ -105,6 +112,15 @@ const toggleEubmyundongDropDown = () => {
 
 const handleCurPage = (nextPage: number) => {
   curPage.value = nextPage
+}
+
+const handleApartmentClick = (clickedApartment: TApartment) => {
+  console.log(clickedApartment.id)
+  apartment.value = clickedApartment
+}
+
+const closeDetail = () => {
+  apartment.value = null
 }
 </script>
 

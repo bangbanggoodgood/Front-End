@@ -1,13 +1,16 @@
 <template>
-  <div class="flex flex-col w-[28rem] p-5 bg-white shadow-xl border border-border">
+  <div class="relative flex flex-col w-[28rem] p-5 bg-white shadow-xl border border-border">
+    <button @click="$emit('closeDetail')" class="absolute top-2 right-2">
+      <close-icon />
+    </button>
     <div class="flex items-center gap-2">
-      <h1 class="text-xl">{{ aptNm }}</h1>
+      <h1 class="text-xl">{{ apartment.aptNm }}</h1>
       <button @click="toggleFavorite">
         <filled-heart-icon v-if="apartment.like" />
         <outlined-heart-icon v-else />
       </button>
     </div>
-    <ai-comment :introduce="introduce" type="detail" />
+    <ai-comment :introduce="apartment.introduce" type="detail" />
     <h2 class="text-lg mt-3">기본정보</h2>
     <apartment-info-table :apartment="apartment" />
     <h2 class="text-lg mt-3">로드뷰</h2>
@@ -48,17 +51,19 @@ import { generateFiveYearsData, generateDealData } from '@/mocks/data'
 import { convertDealToChartItems } from '@/util/apartment'
 import FilledHeartIcon from '../ui/icons/FilledHeartIcon.vue'
 import OutlinedHeartIcon from '../ui/icons/OutlinedHeartIcon.vue'
-import { computed, ref } from 'vue'
+import { computed, onUpdated, ref } from 'vue'
 import DealTable from './DealTable.vue'
 import OffsetPagination from '@/components/ui/pagination/OffsetPagination.vue'
+import CloseIcon from '@/components/ui/icons/CloseIcon.vue'
 
 export interface ApartmentDetailProps {
   apartment: TApartment
 }
 const props = defineProps<ApartmentDetailProps>()
+defineEmits(['closeDetail'])
 
-const apartment = ref(props.apartment)
-const { aptNm, introduce } = apartment.value
+// const apartment = ref(props.apartment)
+// const { aptNm, introduce } = apartment.value
 
 const duration = ref(1)
 const dealData = generateDealData()
@@ -66,12 +71,12 @@ const curDealPage = ref(1)
 
 const toggleFavorite = () => {
   // TOOD: send like to server
-  if (apartment.value.like) {
+  if (props.apartment.like) {
     alert('즐겨찾기를 해제했습니다.')
-    apartment.value.like = 0
+    props.apartment.like = 0
   } else {
     alert('즐겨찾기에 등록했습니다.')
-    apartment.value.like = 1
+    props.apartment.like = 1
   }
 }
 
@@ -80,4 +85,9 @@ const chartData = computed(() => convertDealToChartItems(duration.value, generat
 const handleCurDealPage = (page: number) => {
   curDealPage.value = page
 }
+
+onUpdated(() => {
+  console.log('updated')
+  console.log(props.apartment)
+})
 </script>
