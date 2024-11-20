@@ -5,7 +5,7 @@
   </main>
 </template>
 <script setup lang="ts">
-import Header from '@/components/layout/HeaderItem.vue'
+import Header from '@/components/layout/Header.vue'
 import { RouterView } from 'vue-router'
 </script>
 <style scoped>

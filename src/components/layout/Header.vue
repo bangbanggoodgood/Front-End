@@ -7,7 +7,7 @@
         <RouterLink @click="logout" :to="{ name: 'home' }">로그아웃</RouterLink>
       </template>
       <template v-else>
-        <RouterLink @click="login" :to="{ name: 'signin' }">로그인</RouterLink>
+        <a @click="login">로그인</a>
       </template>
     </div>
   </header>
