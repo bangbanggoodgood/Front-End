@@ -1,8 +1,8 @@
 const { VITE_APP_KAKAO_MAP_KEY } = import.meta.env
 
+var script = document.createElement('script')
 export const loadKakaoMap = (container: any) => {
-  const script = document.createElement('script')
-  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${VITE_APP_KAKAO_MAP_KEY}&autoload=false`
+  script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${VITE_APP_KAKAO_MAP_KEY}&autoload=false&libraries=services,clusterer`
   document.head.appendChild(script)
 
   script.onload = () => {
@@ -20,12 +20,16 @@ export const loadKakaoMap = (container: any) => {
 
 export const loadRoadView = (container: any) => {
   const roadView = new window.kakao.maps.Roadview(container)
-  var roadViewClient = new window.kakao.maps.RoadviewClient() //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
+  const roadViewClient = new window.kakao.maps.RoadviewClient() //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
 
-  var position = new window.kakao.maps.LatLng(33.450701, 126.570667)
+  const geocoder = new window.kakao.maps.services.Geocoder()
+  geocoder.addressSearch('경기도 성남시 분당구 쇳골로 22', function (result: any, status: any) {
+    if (status === window.kakao.maps.services.Status.OK) {
+      var position = new window.kakao.maps.LatLng(result[0].y, result[0].x)
 
-  // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
-  roadViewClient.getNearestPanoId(position, 50, function (panoId: any) {
-    roadView.setPanoId(panoId, position) //panoId와 중심좌표를 통해 로드뷰 실행
+      roadViewClient.getNearestPanoId(position, 50, function (panoId: any) {
+        roadView.setPanoId(panoId, position) //panoId와 중심좌표를 통해 로드뷰 실행
+      })
+    }
   })
 }

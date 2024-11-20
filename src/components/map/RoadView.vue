@@ -11,7 +11,7 @@ let timeoutId = 0
 onMounted(() => {
   timeoutId = setTimeout(() => {
     loadRoadView(roadViewContainer.value)
-  }, 300)
+  }, 1000)
 })
 onUnmounted(() => {
   clearTimeout(timeoutId)
