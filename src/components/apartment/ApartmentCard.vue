@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative border border-border rounded-xl bg-white"
+    class="relative border border-border rounded-xl bg-white hover:bg-slate-100"
     @mouseover="aiComment = true"
     @mouseleave="aiComment = false"
   >
@@ -16,7 +16,7 @@
       </div>
       <ul class="flex flex-wrap gap-2">
         <li v-for="keyword in getKeywords(infra)" :key="keyword">
-          <KeywordBox :keyword="keyword" />
+          <keyword-box :keyword="keyword" />
         </li>
       </ul>
     </div>
@@ -25,7 +25,7 @@
         v-show="aiComment"
         class="absolute -right-1 top-0 translate-x-full overflow-visible z-50"
       >
-        <AiComment :introduce="introduce" />
+        <ai-comment :introduce="introduce" type="preview" />
       </aside>
     </Transition>
   </div>

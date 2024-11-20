@@ -6,7 +6,10 @@
     <span class="flex-grow text-center">{{ placeholder }}</span>
     <DropDownArrowIcon />
     <template v-if="isOpened">
-      <div class="absolute top-10 left-0 text-center w-fully border" v-if="list.length === 0">
+      <div
+        class="absolute top-10 left-0 text-center w-full bg-white border"
+        v-if="list.length === 0"
+      >
         {{ alt }}
       </div>
       <DropDownList v-else :list="list" @onClick="onClick" />

@@ -1,5 +1,5 @@
 <template>
-  <aside class="flex flex-col gap-4 w-[26rem] p-4 bg-white shadow-xl z-40 relative">
+  <aside class="relative flex flex-col gap-4 w-[26rem] p-4 bg-white shadow-xl z-40">
     <h2 class="mb-2 text-xl">매매 내역 검색</h2>
     <section class="flex flex-col gap-3">
       <div class="flex justify-between gap-2">
@@ -35,7 +35,7 @@
         </button>
         <hr class="flex-grow" />
       </div>
-      <DetailSearch v-if="isDetailSearch" />
+      <detail-search v-if="isDetailSearch" />
       <Button class="self-end" variant="outline">검색</Button>
     </section>
     <section class="h-[40rem] w-[50rem] overflow-y-auto scrollbar-hide">
@@ -43,10 +43,10 @@
         <h2 class="text-xl">검색 결과 ({{ apartments.length }})</h2>
         <ul class="flex flex-col gap-5">
           <li v-for="apartment in apartments" :id="apartment.id.toString()">
-            <ApartmentCard :apartment="apartment" />
+            <apartment-card :apartment="apartment" />
           </li>
         </ul>
-        <OffsetPagination
+        <offset-pagination
           class="mt-2"
           :totalItem="apartments.length"
           :curPage="curPage"
@@ -54,6 +54,11 @@
         />
       </div>
     </section>
+    <Transition>
+      <section class="absolute -left-4 translate-x-full h-full">
+        <apartment-detail :apartment="apartments[0]" />
+      </section>
+    </Transition>
   </aside>
 </template>
 
@@ -64,7 +69,8 @@ import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
 import ArrowUpIcon from '../ui/icons/ArrowUpIcon.vue'
 import { Button } from '@/components/ui/button'
-import ApartmentCard from '../apartment/ApartmentCard.vue'
+import ApartmentCard from '@/components/apartment/ApartmentCard.vue'
+import ApartmentDetail from '@/components/apartment/ApartmentDetail.vue'
 import { apartments } from '@/mocks/data'
 import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 
@@ -99,3 +105,15 @@ const handleCurPage = (nextPage: number) => {
   curPage.value = nextPage
 }
 </script>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
