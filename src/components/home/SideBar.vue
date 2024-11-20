@@ -1,5 +1,5 @@
 <template>
-  <aside class="flex flex-col gap-4 w-[26rem] px-6 py-4 bg-white shadow-xl z-40">
+  <aside class="flex flex-col gap-4 w-[26rem] p-4 bg-white shadow-xl z-40 relative">
     <h2 class="mb-2 text-xl">매매 내역 검색</h2>
     <section class="flex flex-col gap-3">
       <div class="flex justify-between gap-2">
@@ -38,19 +38,21 @@
       <DetailSearch v-if="isDetailSearch" />
       <Button class="self-end" variant="outline">검색</Button>
     </section>
-    <section class="flex flex-col gap-2">
-      <h2 class="text-xl">검색 결과 ({{ apartments.length }})</h2>
-      <ul class="flex flex-col gap-5">
-        <li v-for="apartment in apartments" :id="apartment.id.toString()">
-          <ApartmentCard :apartment="apartment" />
-        </li>
-      </ul>
-      <OffsetPagination
-        class="mt-2"
-        :totalItem="100"
-        :curPage="curPage"
-        @handleCurPage="handleCurPage"
-      />
+    <section class="h-[40rem] w-[50rem] overflow-y-auto scrollbar-hide">
+      <div class="w-[24rem] flex flex-col gap-2">
+        <h2 class="text-xl">검색 결과 ({{ apartments.length }})</h2>
+        <ul class="flex flex-col gap-5">
+          <li v-for="apartment in apartments" :id="apartment.id.toString()">
+            <ApartmentCard :apartment="apartment" />
+          </li>
+        </ul>
+        <OffsetPagination
+          class="mt-2"
+          :totalItem="apartments.length"
+          :curPage="curPage"
+          @handleCurPage="handleCurPage"
+        />
+      </div>
     </section>
   </aside>
 </template>

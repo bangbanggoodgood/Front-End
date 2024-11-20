@@ -21,7 +21,10 @@
       </ul>
     </div>
     <Transition>
-      <aside v-show="aiComment" class="absolute right-6 top-12 translate-x-full -translate-y-full">
+      <aside
+        v-show="aiComment"
+        class="absolute -right-1 top-0 translate-x-full overflow-visible z-50"
+      >
         <AiComment :introduce="introduce" />
       </aside>
     </Transition>

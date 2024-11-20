@@ -1,5 +1,6 @@
 <template>
   <Pagination
+    class="flex justify-center"
     v-slot="{ page }"
     :total="totalItem"
     :items-per-page="itemsPerPage"
