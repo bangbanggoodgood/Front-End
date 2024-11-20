@@ -15,11 +15,17 @@
 </template>
 
 <script setup lang="ts">
-import type { TDropDown } from '@/model'
+import type { DropDownListProps } from './DropDownList.vue'
 import DropDownArrowIcon from './icons/DropDownArrowIcon.vue'
 import DropDownList from './DropDownList.vue'
 
-defineProps<TDropDown>()
+interface DropDownProps extends DropDownListProps {
+  placeholder: string
+  isOpened: boolean
+  alt: string
+}
+
+defineProps<DropDownProps>()
 
 const emit = defineEmits(['onClick', 'toggleDropDown'])
 

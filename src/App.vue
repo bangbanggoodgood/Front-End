@@ -4,7 +4,7 @@
     <RouterView />
   </main>
 </template>
-<script setup>
+<script setup lang="ts">
 import Header from '@/components/layout/HeaderItem.vue'
 import { RouterView } from 'vue-router'
 </script>

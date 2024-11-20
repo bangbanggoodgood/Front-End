@@ -2,7 +2,7 @@
   <div class="flex-grow" ref="mapContainer"></div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue'
 const { VITE_APP_KAKAO_MAP_KEY } = import.meta.env
 
@@ -11,7 +11,7 @@ onMounted(() => {
   loadKakaoMap(mapContainer.value)
 })
 
-const loadKakaoMap = (container) => {
+const loadKakaoMap = (container: any) => {
   const script = document.createElement('script')
   script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${VITE_APP_KAKAO_MAP_KEY}&autoload=false`
   document.head.appendChild(script)

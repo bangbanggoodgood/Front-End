@@ -8,9 +8,12 @@
 
 <script setup lang="ts">
 import { defineProps } from 'vue'
-import type { TDropDownList } from '@/model'
 
-defineProps<TDropDownList>()
+export interface DropDownListProps {
+  list: string[]
+}
+
+defineProps<DropDownListProps>()
 
 const emit = defineEmits(['onClick'])
 
