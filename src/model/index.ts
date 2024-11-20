@@ -29,3 +29,11 @@ export interface TChartItem {
     value: number
   }
 }
+
+export interface TDeal {
+  id: number
+  dealDate: string
+  price: number
+  area: number
+  floor: number
+}

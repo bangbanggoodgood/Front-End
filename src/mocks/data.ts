@@ -1,4 +1,4 @@
-import type { TApartment } from '@/model'
+import type { TApartment, TDeal } from '@/model'
 
 export const apartments: TApartment[] = [
   {
@@ -105,6 +105,46 @@ export const generateFiveYearsData = () => {
       const formattedMonth = month.toString().padStart(2, '0')
       const key = `${year}${formattedMonth}`
       data[key] = Math.floor(Math.random() * (60000 - 30000 + 1)) + 30000
+    }
+  }
+
+  return data
+}
+
+export const dealData: TDeal[] = [
+  {
+    id: 1,
+    dealDate: '202411',
+    price: 38000,
+    area: 180.43,
+    floor: 5,
+  },
+]
+
+export const generateDealData = () => {
+  const data: TDeal[] = []
+  const currentYear = new Date().getFullYear()
+  const currentMonth = new Date().getMonth()
+  const startYear = currentYear - 5
+
+  for (let year = currentYear; year >= startYear; year--) {
+    for (let month = 12; month >= 1; month--) {
+      if (year === currentYear && month > currentMonth) {
+        continue
+      }
+      const formattedMonth = month.toString().padStart(2, '0')
+      const key = `${year}${formattedMonth}`
+      const price = Math.floor(Math.random() * (60000 - 30000 + 1)) + 30000
+      const area = Math.floor(Math.random() * (216.93 - 180.43 + 1)) + 180.43
+      const floor = Math.floor(Math.random() * (10 - 1 + 1)) + 1
+
+      data.push({
+        id: data.length + 1,
+        dealDate: key,
+        price,
+        area,
+        floor,
+      })
     }
   }
 

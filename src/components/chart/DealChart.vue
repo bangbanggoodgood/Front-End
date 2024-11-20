@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import type { TChartItem } from '@/model'
 import { Chart, registerables } from 'chart.js'
-import { onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, onUpdated, ref, watch } from 'vue'
 
 export interface DealChartProps {
   data: TChartItem[]
@@ -15,12 +15,9 @@ const props = defineProps<DealChartProps>()
 Chart.register(...registerables)
 
 const chart = ref()
+let chartInstance: any = null
 
-onMounted(() => {
-  createChart()
-})
-
-const data = {
+const data = computed(() => ({
   datasets: [
     {
       label: '평균 거래가(만 원)',
@@ -30,18 +27,36 @@ const data = {
       borderWidth: 1,
     },
   ],
-}
+}))
+
 const options = {
   parsing: {
     xAxisKey: 'month',
     yAxisKey: 'nested.value',
   },
 }
+
 const createChart = () => {
-  new Chart(chart.value, {
+  if (chartInstance) {
+    chartInstance.destroy()
+  }
+
+  chartInstance = new Chart(chart.value, {
     type: 'line',
-    data: data,
+    data: data.value,
     options: options,
   })
 }
+
+watch(() => props.data, createChart)
+
+onMounted(() => {
+  createChart()
+})
+onBeforeUnmount(() => {
+  if (chartInstance) {
+    chartInstance.destroy()
+    chartInstance = null
+  }
+})
 </script>
