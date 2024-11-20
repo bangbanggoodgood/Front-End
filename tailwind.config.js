@@ -26,8 +26,9 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
+        background: 'var(--background)',
         foreground: 'hsl(var(--foreground))',
+        text: 'var(--text)',
         primary: {
           DEFAULT: 'var(--primary)',
           foreground: 'hsl(var(--primary-foreground))',
@@ -89,5 +90,5 @@ module.exports = {
       },
     },
   },
-  plugins: [animate],
+  plugins: [animate, require('tailwind-scrollbar-hide')],
 }
