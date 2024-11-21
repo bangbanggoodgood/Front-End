@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center bg-white px-10 pt-8 pb-4 rounded-lg shadow-md">
+  <div class="flex flex-col items-center bg-white border px-10 pt-8 pb-4 rounded-lg shadow-md">
     <h2 class="text-xl mb-4">{{ info.title }}</h2>
     <ul class="list-disc text-gray-800">
       <li v-for="item in info.infos" class="text-sm leading-6">

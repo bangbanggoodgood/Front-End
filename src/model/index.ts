@@ -1,8 +1,21 @@
-import type { infraArray, infraArrayKr } from '@/lib/infra'
+import type { infraArray, infraArrayKr, keywords } from '@/lib/infra'
+import type { jobs } from '@/lib/job'
 
 export interface TUser {
   name: string
 }
+
+export interface TUserInfo {
+  memberId: number
+  name: string
+  birth: string
+  sex: string
+  job: TJob
+  categories: TKeyword[]
+}
+
+export type TJob = (typeof jobs)[number]
+export type TKeyword = (typeof keywords)[number]
 
 export type TInfra = (typeof infraArray)[number]
 export type TInfraKr = (typeof infraArrayKr)[number]

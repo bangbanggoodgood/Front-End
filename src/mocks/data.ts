@@ -1,4 +1,4 @@
-import type { TApartment, TDeal } from '@/model'
+import type { TApartment, TDeal, TUserInfo } from '@/model'
 
 export const apartments: TApartment[] = [
   {
@@ -111,7 +111,7 @@ export const generateFiveYearsData = () => {
   return data
 }
 
-export const dealData: TDeal[] = [
+export const dealMock: TDeal[] = [
   {
     id: 1,
     dealDate: '202411',
@@ -121,7 +121,7 @@ export const dealData: TDeal[] = [
   },
 ]
 
-export const generateDealData = () => {
+export const generateDealMock = () => {
   const data: TDeal[] = []
   const currentYear = new Date().getFullYear()
   const currentMonth = new Date().getMonth()
@@ -149,4 +149,13 @@ export const generateDealData = () => {
   }
 
   return data
+}
+
+export const userMock: TUserInfo = {
+  memberId: 1,
+  name: '김준하',
+  birth: '99.06.12',
+  sex: '남성',
+  job: 'IT개발/데이터',
+  categories: ['가격', '마트/편의점', '카페', '음식점'],
 }

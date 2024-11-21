@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute w-full h-full bg-black/30 z-[100]">
+  <div class="fixed top-0 left-0 w-full h-full bg-black/30 z-[100]">
     <div
       class="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6 w-[31rem] bg-white p-12 rounded-xl"
     >
@@ -26,6 +26,14 @@ import { keywords } from '@/lib/infra'
 import { ref } from 'vue'
 import Button from '../ui/button/Button.vue'
 
+export interface SurveyContainerProps {
+  isEdit?: boolean
+}
+
+const props = withDefaults(defineProps<SurveyContainerProps>(), {
+  isEdit: false,
+})
+
 const emit = defineEmits(['close'])
 
 const selectedKeywords = ref<string[]>([])
@@ -47,6 +55,11 @@ const submit = () => {
   if (selectedKeywords.value.length === 0) {
     alert('키워드를 한 개 이상 선택해주세요.')
     return
+  }
+  if (props.isEdit) {
+    alert('키워드가 수정되었습니다.')
+  } else {
+    alert('설문이 완료되었습니다.')
   }
   emit('close')
 }
