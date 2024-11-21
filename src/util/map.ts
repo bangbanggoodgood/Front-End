@@ -1,7 +1,13 @@
 const { VITE_APP_KAKAO_MAP_KEY } = import.meta.env
 
-var script = document.createElement('script')
 export const loadKakaoMap = (container: any) => {
+  var script: HTMLScriptElement | null = document.querySelector('#kakaomap-script')
+  if (script) {
+    script.remove()
+  }
+
+  script = document.createElement('script')
+  script.id = 'kakaomap-script'
   script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=${VITE_APP_KAKAO_MAP_KEY}&autoload=false&libraries=services,clusterer`
   document.head.appendChild(script)
 
