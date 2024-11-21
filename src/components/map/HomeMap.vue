@@ -4,10 +4,13 @@
 
 <script setup lang="ts">
 import { loadKakaoMap } from '@/util/map'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUpdated, ref } from 'vue'
 
 const mapContainer = ref(null)
 onMounted(() => {
+  loadKakaoMap(mapContainer.value)
+})
+onUpdated(() => {
   loadKakaoMap(mapContainer.value)
 })
 </script>

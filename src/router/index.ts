@@ -18,6 +18,16 @@ const router = createRouter({
       name: 'myinfo',
       component: () => import('@/views/MyInfoView.vue'),
     },
+    {
+      path: '/favorite',
+      name: 'favorite',
+      component: () => import('@/views/FavoriteView.vue'),
+    },
+    {
+      path: '/didimdol',
+      name: 'didimdol',
+      component: () => import('@/views/DidimdolView.vue'),
+    },
   ],
 })
 
