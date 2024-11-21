@@ -37,3 +37,24 @@ export interface TDeal {
   area: number
   floor: number
 }
+
+export interface TDidimdolDescriptionInfo {
+  title: string
+  infos: string[]
+}
+
+export interface TInterestRate {
+  tenTwo: string
+  fifteenTwo: string
+  twentyTwo: string
+  thirtyTwo: string
+  tenFour: string
+  fifteenFour: string
+  twentyFour: string
+  thirtyFour: string
+  tenSix: string
+  fifteenSix: string
+  twentySix: string
+  thirtySix: string
+  applyDate: string
+}

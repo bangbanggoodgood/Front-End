@@ -59,7 +59,7 @@ module.exports = {
         },
       },
       width: {
-        md: '1024px',
+        base: '800px',
       },
       borderRadius: {
         xl: 'calc(var(--radius) + 4px)',
