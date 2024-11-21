@@ -29,3 +29,15 @@ export const validateBirthDate = (value: string) => {
 
   return true
 }
+
+export const formattedDate = (dateString: string): string => {
+  if (dateString.length !== 8 || isNaN(Number(dateString))) {
+    return ''
+  }
+
+  const year = dateString.slice(0, 4)
+  const month = dateString.slice(4, 6)
+  const day = dateString.slice(6, 8)
+
+  return `${year}.${month}.${day}`
+}
