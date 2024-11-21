@@ -1,12 +1,21 @@
 <template>
-  <Header />
+  <header-bar />
   <main class="flex-1 flex flex-col">
-    <RouterView />
+    <router-view />
   </main>
+  <survey-container v-if="!didSurvey" @close="didSurvey = true" />
 </template>
 <script setup lang="ts">
-import Header from '@/components/layout/Header.vue'
+import HeaderBar from '@/components/layout/Header.vue'
+import { onMounted, ref } from 'vue'
 import { RouterView } from 'vue-router'
+import SurveyContainer from './components/survey/SurveyContainer.vue'
+
+const didSurvey = ref(true)
+
+onMounted(() => {
+  didSurvey.value = false
+})
 </script>
 <style scoped>
 @font-face {
