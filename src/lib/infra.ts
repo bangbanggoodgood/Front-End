@@ -25,3 +25,15 @@ export const infraArrayKr = [
   infraToKr[RESTAURANT],
   infraToKr[CAFE],
 ] as const
+
+export const keywords = [
+  '치안',
+  '교육시설',
+  '의료시설',
+  '마트/편의점',
+  '음식점',
+  '카페',
+  '반려동물',
+  '가격',
+  '종교 시설',
+] as const
