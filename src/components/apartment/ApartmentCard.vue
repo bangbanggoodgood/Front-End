@@ -22,6 +22,7 @@
     </div>
     <Transition>
       <aside
+        v-if="needAi"
         v-show="aiComment"
         class="absolute -right-1 top-0 translate-x-full overflow-visible z-50"
       >
@@ -41,9 +42,12 @@ import { getKeywords } from '@/util/apartment'
 
 interface Props {
   apartment: TApartment
+  needAi?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  needAi: true,
+})
 
 const {
   aptNm,
