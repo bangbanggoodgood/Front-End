@@ -14,7 +14,8 @@ import SurveyContainer from './components/survey/SurveyContainer.vue'
 const didSurvey = ref(true)
 
 onMounted(() => {
-  didSurvey.value = false
+  // TODO: check if user already did survey
+  // didSurvey.value = false
 })
 </script>
 <style scoped>

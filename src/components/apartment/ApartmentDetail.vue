@@ -47,7 +47,7 @@ import AiComment from './AiComment.vue'
 import ApartmentInfoTable from './ApartmentInfoTable.vue'
 import RoadView from '../map/RoadView.vue'
 import DealChart from '../chart/DealChart.vue'
-import { generateFiveYearsData, generateDealData } from '@/mocks/data'
+import { generateFiveYearsData, generateDealMock } from '@/mocks/data'
 import { convertDealToChartItems } from '@/util/apartment'
 import FilledHeartIcon from '../ui/icons/FilledHeartIcon.vue'
 import OutlinedHeartIcon from '../ui/icons/OutlinedHeartIcon.vue'
@@ -66,7 +66,7 @@ defineEmits(['closeDetail'])
 // const { aptNm, introduce } = apartment.value
 
 const duration = ref(1)
-const dealData = generateDealData()
+const dealData = generateDealMock()
 const curDealPage = ref(1)
 
 const toggleFavorite = () => {
