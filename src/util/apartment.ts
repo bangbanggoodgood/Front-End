@@ -68,7 +68,7 @@ export const convertDealToChartItems = (
       const key = chunk[0][0] // Use the key of the first item in the chunk for the month
 
       return {
-        month: `${key.slice(0, 4)}.${key.slice(4, 6)}`, // Format as "YYYY.MM"
+        id: `${key.slice(0, 4)}.${key.slice(4, 6)}`, // Format as "YYYY.MM"
         nested: { value: Math.round(average) }, // Round average value to nearest integer
       }
     })

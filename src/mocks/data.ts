@@ -1,4 +1,6 @@
-import type { TApartment, TDeal, TUserInfo } from '@/model'
+import { infraArray } from '@/lib/infra'
+import { userRole } from '@/lib/user'
+import type { TApartment, TDeal, TInfraStat, TSexStat, TUserInfo } from '@/model'
 
 export const apartments: TApartment[] = [
   {
@@ -154,8 +156,34 @@ export const generateDealMock = () => {
 export const userMock: TUserInfo = {
   memberId: 1,
   name: '김준하',
+  role: userRole.admin,
   birth: '99.06.12',
   sex: '남성',
   job: 'IT개발/데이터',
   categories: ['가격', '마트/편의점', '카페', '음식점'],
 }
+
+// stat
+const generateInfraStatMock = (): TInfraStat => {
+  const infraStats: Partial<TInfraStat> = {}
+  let total = 0
+
+  // Generate random values for each infra key
+  infraArray.forEach((infra) => {
+    const randomValue = Math.floor(Math.random() * 1000) + 1 // Random value between 1 and 1000
+    infraStats[infra] = randomValue
+    total += randomValue
+  })
+
+  return {
+    ...infraStats,
+    total, // Total is the sum of all values
+  } as TInfraStat
+}
+export const infraStatMock = generateInfraStatMock()
+export const sexStatMock: TSexStat = {
+  total: 1000,
+  male: 450,
+  female: 550,
+}
+// export const
