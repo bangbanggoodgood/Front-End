@@ -1,1 +1,3 @@
-export const handlers = []
+import { handlers as aiChatHandlers } from './aiChat'
+
+export const handlers = [...aiChatHandlers]
