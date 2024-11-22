@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import type { TApartment } from '@/model'
-import AiComment from './AiComment.vue'
+import AiComment from '../ai/AiComment.vue'
 import ApartmentInfoTable from './ApartmentInfoTable.vue'
 import RoadView from '../map/RoadView.vue'
 import DealChart from '../chart/DealChart.vue'

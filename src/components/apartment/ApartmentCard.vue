@@ -24,7 +24,7 @@
       <aside
         v-if="needAi"
         v-show="aiComment"
-        class="absolute -right-1 top-0 translate-x-full overflow-visible z-50"
+        class="absolute -right-1 top-0 translate-x-full overflow-visible z-20"
       >
         <ai-comment :introduce="introduce" type="preview" />
       </aside>
@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import type { TApartment } from '@/model'
 import { numberToKrMoney } from '@/util/money'
-import AiComment from './AiComment.vue'
+import AiComment from '../ai/AiComment.vue'
 import { ref } from 'vue'
 import KeywordBox from '../ui/KeywordBox.vue'
 import { getKeywords } from '@/util/apartment'

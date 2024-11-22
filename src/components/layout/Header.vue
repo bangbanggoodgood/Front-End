@@ -1,6 +1,12 @@
 <template>
   <header class="flex justify-between items-center py-4 px-8 bg-primary shadow-lg text-white z-50">
-    <router-link class="text-4xl" :to="{ name: 'home' }">LOGO</router-link>
+    <div class="flex items-center gap-6">
+      <router-link class="text-4xl" :to="{ name: 'home' }">LOGO</router-link>
+      <div class="relative">
+        <button class="text-lg" @click="chatToggle">AI에게 질문하기</button>
+        <ai-chat v-show="chatOpen" />
+      </div>
+    </div>
     <div class="text-lg text-white flex items-center gap-4">
       <template v-if="user.name">
         <router-link v-if="user.role === userRole.admin" :to="{ name: 'admin' }"
@@ -34,11 +40,17 @@ import DropDownList from '../ui/DropDownList.vue'
 import router from '@/router'
 import { onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
 import { userRole } from '@/lib/user'
+import AiChat from '../ai/AiChat.vue'
 
 const user = useUserStore()
 
 const dropdown = ref(false)
 const dropdownRef = ref<any>(null)
+const chatOpen = ref<boolean>(false)
+
+const chatToggle = () => {
+  chatOpen.value = !chatOpen.value
+}
 
 const handleOutsideClick = (event: MouseEvent) => {
   const element = dropdownRef.value
