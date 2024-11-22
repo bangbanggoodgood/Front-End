@@ -31,7 +31,7 @@ const data = computed(() => ({
 
 const options = {
   parsing: {
-    xAxisKey: 'month',
+    xAxisKey: 'id',
     yAxisKey: 'nested.value',
   },
 }
@@ -44,7 +44,7 @@ const createChart = () => {
   chartInstance = new Chart(chart.value, {
     type: 'line',
     data: data.value,
-    options: options,
+    options,
   })
 }
 

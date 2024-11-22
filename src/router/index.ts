@@ -24,6 +24,11 @@ const router = createRouter({
       component: () => import('@/views/FavoriteView.vue'),
     },
     {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/AdminView.vue'),
+    },
+    {
       path: '/didimdol',
       name: 'didimdol',
       component: () => import('@/views/DidimdolView.vue'),
