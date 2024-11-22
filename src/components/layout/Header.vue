@@ -53,10 +53,6 @@ onMounted(() => {
   document.addEventListener('click', handleOutsideClick)
 })
 
-onUpdated(() => {
-  console.log(user.role)
-})
-
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleOutsideClick)
 })

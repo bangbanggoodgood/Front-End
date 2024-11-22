@@ -168,16 +168,15 @@ const generateInfraStatMock = (): TInfraStat => {
   const infraStats: Partial<TInfraStat> = {}
   let total = 0
 
-  // Generate random values for each infra key
   infraArray.forEach((infra) => {
-    const randomValue = Math.floor(Math.random() * 1000) + 1 // Random value between 1 and 1000
+    const randomValue = Math.floor(Math.random() * 1000) + 1
     infraStats[infra] = randomValue
     total += randomValue
   })
 
   return {
     ...infraStats,
-    total, // Total is the sum of all values
+    total,
   } as TInfraStat
 }
 export const infraStatMock = generateInfraStatMock()
