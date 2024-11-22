@@ -29,7 +29,7 @@ import Input from '../ui/input/Input.vue'
 import ChatItem from './ChatItem.vue'
 import { onMounted, onUpdated, ref, type VNodeRef } from 'vue'
 import type { TChat } from '@/model'
-import { postAiChat } from '../service/axios/aiChat'
+import { postAiChat } from '../../service/axios/aiChat'
 
 const scrollArea = ref<VNodeRef | null>(null)
 const chats = ref<TChat[]>([])
