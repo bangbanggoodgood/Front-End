@@ -1,13 +1,16 @@
 import type { infraArray, infraArrayKr, keywords } from '@/lib/infra'
+import type { userRole } from '@/lib/user'
 import type { jobs } from '@/lib/job'
 
-export interface TUser {
-  name: string
-}
+export type TUserRole = (typeof userRole)[keyof typeof userRole]
 
-export interface TUserInfo {
+export interface TUser {
   memberId: number
   name: string
+  role: TUserRole
+}
+
+export interface TUserInfo extends TUser {
   birth: string
   sex: string
   job: TJob
