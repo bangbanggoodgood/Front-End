@@ -64,7 +64,7 @@
       <Transition name="slide-fade">
         <section
           v-if="apartment"
-          class="absolute -left-8 translate-x-full h-[calc(100%-2rem)] overflow-y-auto rounded-xl z-30"
+          class="absolute -left-8 translate-x-full h-[calc(100%-2rem)] overflow-y-auto rounded-xl z-10"
         >
           <apartment-detail :apartment="apartment" @close-detail="closeDetail" />
         </section>

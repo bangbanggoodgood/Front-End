@@ -87,3 +87,9 @@ export type TSexStat = {
 }
 export type TAgeStat = Record<string, number>
 export type TPriceState = Record<string, number>
+
+// chat
+export interface TChat {
+  isAi: boolean
+  message: string
+}

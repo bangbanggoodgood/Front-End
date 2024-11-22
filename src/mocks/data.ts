@@ -1,6 +1,6 @@
 import { infraArray } from '@/lib/infra'
 import { userRole } from '@/lib/user'
-import type { TApartment, TDeal, TInfraStat, TSexStat, TUserInfo } from '@/model'
+import type { TApartment, TChat, TDeal, TInfraStat, TSexStat, TUserInfo } from '@/model'
 
 export const apartments: TApartment[] = [
   {
@@ -186,3 +186,51 @@ export const sexStatMock: TSexStat = {
   female: 550,
 }
 // export const
+
+// aiChat
+export const chatsMock: TChat[] = [
+  {
+    isAi: false,
+    message: '동해물과',
+  },
+  {
+    isAi: true,
+    message: '남산 위에 저 ',
+  },
+  {
+    isAi: false,
+    message: '동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세',
+  },
+  {
+    isAi: true,
+    message:
+      '남산 위에 저 소나무 철갑을 두른듯 남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세',
+  },
+  {
+    isAi: false,
+    message: '동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세',
+  },
+  {
+    isAi: true,
+    message:
+      '남산 위에 저 소나무 철갑을 두른듯 남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세',
+  },
+  {
+    isAi: false,
+    message: '동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세',
+  },
+  {
+    isAi: true,
+    message:
+      '남산 위에 저 소나무 철갑을 두른듯 남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세',
+  },
+  {
+    isAi: false,
+    message: '동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세',
+  },
+  {
+    isAi: true,
+    message:
+      '남산 위에 저 소나무 철갑을 두른듯 남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세',
+  },
+]
