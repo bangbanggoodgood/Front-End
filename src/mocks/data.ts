@@ -49,6 +49,22 @@ export const gugunMock: string[] = [
   '중구',
   '중랑구',
 ]
+export const dongMock: string[] = [
+  '개포동',
+  '논현동',
+  '대치동',
+  '도곡동',
+  '삼성동',
+  '세곡동',
+  '수서동',
+  '신사동',
+  '압구정동',
+  '역삼동',
+  '율현동',
+  '일원동',
+  '자곡동',
+  '청담동',
+]
 
 // apartment
 export const apartments: TApartment[] = [

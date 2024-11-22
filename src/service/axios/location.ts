@@ -19,3 +19,13 @@ export const getGugun = async (sido: string): Promise<string[] | false> => {
     return false
   }
 }
+
+export const getDong = async (sido: string, gugun: string): Promise<string[] | false> => {
+  try {
+    const res = await location.getDong(sido, gugun)
+    return res.data
+  } catch (error) {
+    console.error(error)
+    return false
+  }
+}

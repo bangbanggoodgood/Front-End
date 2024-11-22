@@ -18,6 +18,14 @@ export const location = {
       },
     })
   },
+  getDong: async (sido: string, gugun: string) => {
+    return instance.get('/dong', {
+      params: {
+        sido,
+        gugun,
+      },
+    })
+  },
 }
 
 export const aiChat = {

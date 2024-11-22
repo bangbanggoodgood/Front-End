@@ -1,5 +1,5 @@
 import { HttpResponse } from 'msw'
-import { gugunMock, sidoMock } from '../data'
+import { dongMock, gugunMock, sidoMock } from '../data'
 
 export const getSidoMock = async () => {
   return HttpResponse.json(sidoMock)
@@ -7,4 +7,8 @@ export const getSidoMock = async () => {
 
 export const getGugunMock = async () => {
   return HttpResponse.json(gugunMock)
+}
+
+export const getDongMock = async () => {
+  return HttpResponse.json(dongMock)
 }

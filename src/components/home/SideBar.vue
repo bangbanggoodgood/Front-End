@@ -24,8 +24,8 @@
               :alt="'시/도를 선택해주세요'"
             />
             <DropDown
-              placeholder="읍/면/동"
-              :list="[]"
+              :placeholder="selectedDong"
+              :list="dongList"
               :isOpened="dropdown === 3"
               @onClick="eubmyundongClick"
               @toggleDropDown="toggleEubmyundongDropDown"
@@ -86,12 +86,14 @@ import { apartments } from '@/mocks/data'
 import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 import type { TApartment } from '@/model'
 import { useRoute } from 'vue-router'
-import { getGugun, getSido } from '@/service/axios/location'
+import { getDong, getGugun, getSido } from '@/service/axios/location'
 
 const sidoList = ref<string[]>([])
 const selectedSido = ref<string>('시/도')
 const gugunList = ref<string[]>([])
 const selectedGugun = ref<string>('시/군/구')
+const dongList = ref<string[]>([])
+const selectedDong = ref<string>('읍/면/동')
 
 const dropdown = ref(0)
 const isDetailSearch = ref(false)
@@ -121,6 +123,7 @@ const toggleSidoDropDown = () => {
 const sidoClick = async (sido: string) => {
   selectedSido.value = sido
   selectedGugun.value = '시/군/구'
+  selectedDong.value = '읍/면/동'
   const data = await getGugun(sido)
   if (data) {
     gugunList.value = data
@@ -132,12 +135,19 @@ const sidoClick = async (sido: string) => {
 const toggleGugunDropDown = () => {
   dropdown.value = dropdown.value === 2 ? 0 : 2
 }
-const gugunClick = (gugun: string) => {
+const gugunClick = async (gugun: string) => {
   selectedGugun.value = gugun
+  selectedDong.value = '읍/면/동'
+  const data = await getDong(selectedSido.value, gugun)
+  if (data) {
+    dongList.value = data
+  } else {
+    alert('읍/면/동 정보를 가져오는데 실패했습니다.')
+  }
 }
 
 const eubmyundongClick = (item: string) => {
-  console.log(item)
+  selectedDong.value = item
 }
 const toggleEubmyundongDropDown = () => {
   dropdown.value = dropdown.value === 3 ? 0 : 3
