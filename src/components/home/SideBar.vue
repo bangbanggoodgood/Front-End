@@ -8,8 +8,8 @@
         <section class="flex flex-col gap-3">
           <div class="flex justify-between gap-2">
             <DropDown
-              placeholder="시/도"
-              :list="['서울특별시', '경기도', '인천광역시', '강원도']"
+              :placeholder="selectedSido"
+              :list="sidoList"
               :isOpened="dropdown === 1"
               @onClick="sidoClick"
               @toggleDropDown="toggleSidoDropDown"
@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, type Ref } from 'vue'
+import { computed, onMounted, ref, watch, type Ref } from 'vue'
 import DropDown from '../ui/DropDown.vue'
 import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
@@ -86,21 +86,35 @@ import { apartments } from '@/mocks/data'
 import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 import type { TApartment } from '@/model'
 import { useRoute } from 'vue-router'
+import { getSido } from '@/service/axios/location'
+
+const sidoList = ref<string[]>([])
+const selectedSido = ref<string>('시/도')
 
 const dropdown = ref(0)
 const isDetailSearch = ref(false)
 const curPage = ref(1)
 const apartment: Ref<TApartment | null> = ref(null)
+
 const route = useRoute()
 
 const isHome = computed(() => route.path === '/')
+
+onMounted(async () => {
+  const data = await getSido()
+  if (data) {
+    sidoList.value = data
+  } else {
+    alert('시/도 정보를 가져오는데 실패했습니다.')
+  }
+})
 
 watch(curPage, (nv, ov) => {
   console.log(nv, ov)
 })
 
 const sidoClick = (item: string) => {
-  console.log(item)
+  selectedSido.value = item
 }
 const toggleSidoDropDown = () => {
   dropdown.value = dropdown.value === 1 ? 0 : 1

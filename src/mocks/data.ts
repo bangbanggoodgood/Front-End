@@ -2,6 +2,28 @@ import { infraArray } from '@/lib/infra'
 import { userRole } from '@/lib/user'
 import type { TApartment, TChat, TDeal, TInfraStat, TSexStat, TUserInfo } from '@/model'
 
+// location
+export const sidoMock: string[] = [
+  '서울특별시',
+  '부산광역시',
+  '대구광역시',
+  '인천광역시',
+  '광주광역시',
+  '대전광역시',
+  '울산광역시',
+  '세종특별자치도',
+  '경기도',
+  '강원도',
+  '충청북도',
+  '충청남도',
+  '전라북도',
+  '전라남도',
+  '경상북도',
+  '경상남도',
+  '제주특별자치도',
+]
+
+// apartment
 export const apartments: TApartment[] = [
   {
     id: 1,
@@ -93,6 +115,7 @@ export const apartments: TApartment[] = [
   },
 ]
 
+// deal
 export const generateFiveYearsData = () => {
   const data: Record<string, number> = {}
   const currentYear = new Date().getFullYear()
@@ -112,7 +135,6 @@ export const generateFiveYearsData = () => {
 
   return data
 }
-
 export const dealMock: TDeal[] = [
   {
     id: 1,
@@ -122,7 +144,6 @@ export const dealMock: TDeal[] = [
     floor: 5,
   },
 ]
-
 export const generateDealMock = () => {
   const data: TDeal[] = []
   const currentYear = new Date().getFullYear()
@@ -153,6 +174,7 @@ export const generateDealMock = () => {
   return data
 }
 
+// user
 export const userMock: TUserInfo = {
   memberId: 1,
   name: '김준하',

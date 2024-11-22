@@ -7,10 +7,15 @@ const instance = axios.create({
   timeout: 5000,
 })
 
+export const location = {
+  getSido: async () => {
+    console.log(baseUrl)
+    return instance.get('/sido')
+  },
+}
+
 export const aiChat = {
   postAiChat: async (message: string) => {
-    console.log(baseUrl)
-
     return instance.post('/questions', {
       data: {
         message,
