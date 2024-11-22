@@ -16,11 +16,11 @@
               :alt="''"
             />
             <DropDown
-              placeholder="시/군/구"
-              :list="[]"
+              :placeholder="selectedGugun"
+              :list="gugunList"
               :isOpened="dropdown === 2"
-              @onClick="sigunguClick"
-              @toggleDropDown="toggleSigunguDropDown"
+              @onClick="gugunClick"
+              @toggleDropDown="toggleGugunDropDown"
               :alt="'시/도를 선택해주세요'"
             />
             <DropDown
@@ -86,10 +86,12 @@ import { apartments } from '@/mocks/data'
 import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 import type { TApartment } from '@/model'
 import { useRoute } from 'vue-router'
-import { getSido } from '@/service/axios/location'
+import { getGugun, getSido } from '@/service/axios/location'
 
 const sidoList = ref<string[]>([])
 const selectedSido = ref<string>('시/도')
+const gugunList = ref<string[]>([])
+const selectedGugun = ref<string>('시/군/구')
 
 const dropdown = ref(0)
 const isDetailSearch = ref(false)
@@ -113,18 +115,27 @@ watch(curPage, (nv, ov) => {
   console.log(nv, ov)
 })
 
-const sidoClick = (item: string) => {
-  selectedSido.value = item
-}
 const toggleSidoDropDown = () => {
   dropdown.value = dropdown.value === 1 ? 0 : 1
 }
-const sigunguClick = (item: string) => {
-  console.log(item)
+const sidoClick = async (sido: string) => {
+  selectedSido.value = sido
+  selectedGugun.value = '시/군/구'
+  const data = await getGugun(sido)
+  if (data) {
+    gugunList.value = data
+  } else {
+    alert('시/군/구 정보를 가져오는데 실패했습니다.')
+  }
 }
-const toggleSigunguDropDown = () => {
+
+const toggleGugunDropDown = () => {
   dropdown.value = dropdown.value === 2 ? 0 : 2
 }
+const gugunClick = (gugun: string) => {
+  selectedGugun.value = gugun
+}
+
 const eubmyundongClick = (item: string) => {
   console.log(item)
 }

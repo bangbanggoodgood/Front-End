@@ -9,8 +9,14 @@ const instance = axios.create({
 
 export const location = {
   getSido: async () => {
-    console.log(baseUrl)
     return instance.get('/sido')
+  },
+  getGugun: async (sido: string) => {
+    return instance.get('/gugun', {
+      params: {
+        sido,
+      },
+    })
   },
 }
 
