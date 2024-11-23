@@ -1,4 +1,4 @@
-import type { TApartmentSearch } from '@/model'
+import type { TApartmentSearch, TPageRequest } from '@/model'
 import axios from 'axios'
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
@@ -50,6 +50,22 @@ export const apartment = {
     return instance.post('/likes', {
       memberId,
       aptSeq,
+    })
+  },
+  getDealGraph: async (aptSeq: number) => {
+    return instance.get('/deals/detailGraph', {
+      params: {
+        aptSeq,
+      },
+    })
+  },
+  getDealList: async (aptSeq: number, { presentPage, limit }: TPageRequest) => {
+    return instance.get('/deals/detailChart', {
+      params: {
+        aptSeq,
+        presentPage,
+        limit,
+      },
     })
   },
 }

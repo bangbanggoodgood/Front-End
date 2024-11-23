@@ -1,4 +1,4 @@
-import type { TApartment, TApartmentSearch, TPageResponse } from '@/model'
+import type { TApartment, TApartmentSearch, TDeal, TPageRequest, TPageResponse } from '@/model'
 import { apartment } from './api'
 
 export const getApartments = async (
@@ -42,6 +42,29 @@ export const postLike = async (memberId: number, aptSeq: number): Promise<boolea
   try {
     await apartment.postLike(memberId, aptSeq)
     return true
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
+export const getDealGraph = async (aptSeq: number): Promise<Record<string, number> | false> => {
+  try {
+    const res = await apartment.getDealGraph(aptSeq)
+    return res.data
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
+export const getDealList = async (
+  aptSeq: number,
+  { presentPage, limit }: TPageRequest,
+): Promise<TPageResponse<TDeal> | false> => {
+  try {
+    const res = await apartment.getDealList(aptSeq, { presentPage, limit })
+    return res.data
   } catch (e) {
     console.error(e)
     return false

@@ -100,7 +100,7 @@ export const aiCommentMock: string =
   '안녕하세요! 저는 2008년에 태어난 아파트예요. 교육 환경이 뛰어나고 편리한 생활 인프라를 자랑하며, 가족들과 함께 활기차고 편안한 삶을 꾸려나가기 딱 좋은 공간이에요! 😊'
 
 // deal
-export const generateFiveYearsData = () => {
+export const generateFiveYearsData = (): Record<string, number> => {
   const data: Record<string, number> = {}
   const currentYear = new Date().getFullYear()
   const currentMonth = new Date().getMonth()
@@ -119,16 +119,8 @@ export const generateFiveYearsData = () => {
 
   return data
 }
-export const dealMock: TDeal[] = [
-  {
-    id: 1,
-    dealDate: '202411',
-    price: 38000,
-    area: 180.43,
-    floor: 5,
-  },
-]
-export const generateDealMock = () => {
+export const dealGraphMock: Record<string, number> = generateFiveYearsData()
+export const generateDealMock = (): TDeal[] => {
   const data: TDeal[] = []
   const currentYear = new Date().getFullYear()
   const currentMonth = new Date().getMonth()
@@ -157,6 +149,7 @@ export const generateDealMock = () => {
 
   return data
 }
+export const dealChartMock: TDeal[] = generateDealMock()
 
 // user
 export const userMock: TUserInfo = {

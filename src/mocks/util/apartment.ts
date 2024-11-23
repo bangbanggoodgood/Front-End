@@ -1,8 +1,8 @@
 import type { TMockRequest } from '@/model'
 import { HttpResponse } from 'msw'
-import { aiCommentMock, apartmentsMock } from '../data'
+import { aiCommentMock, apartmentsMock, dealChartMock, dealGraphMock } from '../data'
 
-export const getApartments = async ({ request }: TMockRequest) => {
+export const getApartmentsMock = async ({ request }: TMockRequest) => {
   const url = new URL(request.url)
   const presentPage = Number(url.searchParams.get('presentPage'))
   const limit = Number(url.searchParams.get('limit'))
@@ -12,7 +12,7 @@ export const getApartments = async ({ request }: TMockRequest) => {
   })
 }
 
-export const getAiIntroduce = async ({ request }: TMockRequest) => {
+export const getAiIntroduceMock = async ({ request }: TMockRequest) => {
   const url = new URL(request.url)
   const aptSeq = Number(url.searchParams.get('aptSeq'))
   return HttpResponse.json({
@@ -20,6 +20,20 @@ export const getAiIntroduce = async ({ request }: TMockRequest) => {
   })
 }
 
-export const postLike = async () => {
+export const postLikeMock = async () => {
   return HttpResponse.json()
+}
+
+export const getDealGraphMock = async () => {
+  return HttpResponse.json(dealGraphMock)
+}
+
+export const getDealChartMock = async ({ request }: TMockRequest) => {
+  const url = new URL(request.url)
+  const presentPage = Number(url.searchParams.get('presentPage'))
+  const limit = Number(url.searchParams.get('limit'))
+  return HttpResponse.json({
+    totalRow: dealChartMock.length,
+    data: dealChartMock.slice((presentPage - 1) * limit, presentPage * limit),
+  })
 }

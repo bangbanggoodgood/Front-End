@@ -29,33 +29,33 @@
         5년
       </button>
     </div>
-    <deal-chart :data="chartData" />
+    <deal-chart :data="computedGraphData" />
     <h2 class="text-lg mt-3">거래 내역</h2>
     <deal-table :deals="dealData" />
     <offset-pagination
       class="mt-2"
-      :totalItem="dealData.length"
+      :totalItem="dealTotal"
       :curPage="curDealPage"
+      :itemsPerPage="20"
       @handleCurPage="handleCurDealPage"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { TApartment } from '@/model'
+import type { TDeal, TApartment } from '@/model'
 import AiComment from '../ai/AiComment.vue'
 import ApartmentInfoTable from './ApartmentInfoTable.vue'
 import RoadView from '../map/RoadView.vue'
 import DealChart from '../chart/DealChart.vue'
-import { generateFiveYearsData, generateDealMock } from '@/mocks/data'
 import { convertDealToChartItems } from '@/util/apartment'
 import FilledHeartIcon from '../ui/icons/FilledHeartIcon.vue'
 import OutlinedHeartIcon from '../ui/icons/OutlinedHeartIcon.vue'
-import { computed, onUpdated, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import DealTable from './DealTable.vue'
 import OffsetPagination from '@/components/ui/pagination/OffsetPagination.vue'
 import CloseIcon from '@/components/ui/icons/CloseIcon.vue'
-import { postLike } from '@/service/axios/apartment'
+import { getDealGraph, getDealList, postLike } from '@/service/axios/apartment'
 import { useUserStore } from '@/stores/user'
 
 export interface ApartmentDetailProps {
@@ -65,9 +65,12 @@ export interface ApartmentDetailProps {
 const props = defineProps<ApartmentDetailProps>()
 defineEmits(['closeDetail'])
 
-const duration = ref(1)
-const dealData = generateDealMock()
-const curDealPage = ref(1)
+const graphData = ref<Record<string, number>>({})
+const dealData = ref<TDeal[]>([])
+const dealTotal = ref<number>(0)
+
+const duration = ref<number>(1)
+const curDealPage = ref<number>(1)
 
 const { memberId } = useUserStore()
 
@@ -86,14 +89,42 @@ const toggleFavorite = async () => {
   }
 }
 
-const chartData = computed(() => convertDealToChartItems(duration.value, generateFiveYearsData()))
+const computedGraphData = computed(() => convertDealToChartItems(duration.value, graphData.value))
 
 const handleCurDealPage = (page: number) => {
   curDealPage.value = page
 }
 
-onUpdated(() => {
-  console.log('updated')
-  console.log(props.apartment)
-})
+watch(
+  props.apartment,
+  async (nv, ov) => {
+    if (nv.aptSeq !== ov?.aptSeq) {
+      const data = await getDealGraph(nv.aptSeq)
+      if (data) {
+        graphData.value = data
+      }
+    }
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+)
+
+watch(
+  [props.apartment, curDealPage],
+  async ([nApt, nPage], [oApt, oPage]) => {
+    if (nApt.aptSeq !== oApt?.aptSeq || nPage !== oPage) {
+      const data = await getDealList(nApt.aptSeq, { presentPage: nPage, limit: 20 })
+      if (data) {
+        dealData.value = data.data
+        dealTotal.value = data.totalRow
+      }
+    }
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+)
 </script>
