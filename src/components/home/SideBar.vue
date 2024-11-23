@@ -50,10 +50,10 @@
         <ul class="flex flex-col gap-5">
           <li
             v-for="apartment in apartments"
-            :key="apartment.id.toString()"
+            :key="apartment.aptSeq.toString()"
             @click="handleApartmentClick(apartment)"
           >
-            <apartment-card :apartment="apartment" :introduce="aiIntroduces[apartment.id]" />
+            <apartment-card :apartment="apartment" :introduce="aiIntroduces[apartment.aptSeq]" />
           </li>
         </ul>
         <offset-pagination
@@ -70,7 +70,7 @@
         >
           <apartment-detail
             :apartment="apartment"
-            :introduce="aiIntroduces[apartment.id]"
+            :introduce="aiIntroduces[apartment.aptSeq]"
             @close-detail="closeDetail"
           />
         </section>
@@ -196,7 +196,7 @@ const search = async (page: number = 1) => {
   if (data) {
     apartments.value = data.data
     totalResult.value = data.totalRow
-    const introduceData = await getAiIntroduces(data.data.map((item) => item.id))
+    const introduceData = await getAiIntroduces(data.data.map((item) => item.aptSeq))
     if (introduceData) {
       aiIntroduces.value = introduceData
     }

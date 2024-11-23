@@ -80,7 +80,7 @@ const generateApartmentsMock = (limit: number): TApartment[] => {
     })
 
     result.push({
-      id: i,
+      aptSeq: i,
       aptNm: `아파트 ${i}`,
       buildYear: '2001',
       minArea: 180.43,

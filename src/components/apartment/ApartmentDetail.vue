@@ -72,7 +72,7 @@ const curDealPage = ref(1)
 const { memberId } = useUserStore()
 
 const toggleFavorite = async () => {
-  const res = await postLike(memberId, props.apartment.id)
+  const res = await postLike(memberId, props.apartment.aptSeq)
   if (!res) {
     alert('즐겨찾기 등록에 실패했습니다.')
     return
