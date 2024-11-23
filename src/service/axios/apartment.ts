@@ -37,3 +37,13 @@ export const getAiIntroduces = async (
     return false
   }
 }
+
+export const postLike = async (memberId: number, aptSeq: number): Promise<boolean> => {
+  try {
+    await apartment.postLike(memberId, aptSeq)
+    return true
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}

@@ -55,6 +55,8 @@ import { computed, onUpdated, ref } from 'vue'
 import DealTable from './DealTable.vue'
 import OffsetPagination from '@/components/ui/pagination/OffsetPagination.vue'
 import CloseIcon from '@/components/ui/icons/CloseIcon.vue'
+import { postLike } from '@/service/axios/apartment'
+import { useUserStore } from '@/stores/user'
 
 export interface ApartmentDetailProps {
   apartment: TApartment
@@ -67,8 +69,14 @@ const duration = ref(1)
 const dealData = generateDealMock()
 const curDealPage = ref(1)
 
-const toggleFavorite = () => {
-  // TODO: send like to server
+const { memberId } = useUserStore()
+
+const toggleFavorite = async () => {
+  const res = await postLike(memberId, props.apartment.id)
+  if (!res) {
+    alert('즐겨찾기 등록에 실패했습니다.')
+    return
+  }
   if (props.apartment.like) {
     alert('즐겨찾기를 해제했습니다.')
     props.apartment.like = 0

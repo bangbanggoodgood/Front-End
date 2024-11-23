@@ -46,6 +46,12 @@ export const apartment = {
       },
     })
   },
+  postLike: async (memberId: number, aptSeq: number) => {
+    return instance.post('/likes', {
+      memberId,
+      aptSeq,
+    })
+  },
 }
 
 export const aiChat = {

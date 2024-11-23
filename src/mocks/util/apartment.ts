@@ -19,3 +19,7 @@ export const getAiIntroduce = async ({ request }: TMockRequest) => {
     comment: `mock${aptSeq}: ` + aiCommentMock,
   })
 }
+
+export const postLike = async () => {
+  return HttpResponse.json()
+}
