@@ -46,6 +46,14 @@ export const apartment = {
       },
     })
   },
+  getLikes: async (memberId: number, { limit, presentPage }: TPageRequest) => {
+    return instance.get(`/likes/${memberId}`, {
+      params: {
+        limit,
+        presentPage,
+      },
+    })
+  },
   postLike: async (memberId: number, aptSeq: number) => {
     return instance.post('/likes', {
       memberId,

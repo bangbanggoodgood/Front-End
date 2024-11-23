@@ -38,6 +38,19 @@ export const getAiIntroduces = async (
   }
 }
 
+export const getLikes = async (
+  memberId: number,
+  { presentPage, limit }: TPageRequest,
+): Promise<TPageResponse<TApartment> | false> => {
+  try {
+    const res = await apartment.getLikes(memberId, { presentPage, limit })
+    return res.data
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
+
 export const postLike = async (memberId: number, aptSeq: number): Promise<boolean> => {
   try {
     await apartment.postLike(memberId, aptSeq)

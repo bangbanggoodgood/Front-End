@@ -92,9 +92,10 @@ import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 import type { TApartment } from '@/model'
 import { useRoute } from 'vue-router'
 import { getDong, getGugun, getSido } from '@/service/axios/location'
-import { getAiIntroduces, getApartments } from '@/service/axios/apartment'
+import { getAiIntroduces, getApartments, getLikes } from '@/service/axios/apartment'
 import { moveScrollTo } from '@/mocks/util/scroll'
 import { isNaturalNumber } from '@/util/number'
+import { useUserStore } from '@/stores/user'
 
 const sidoList = ref<string[]>([])
 const gugunList = ref<string[]>([])
@@ -121,15 +122,20 @@ const apartment: Ref<TApartment | null> = ref(null)
 const resultTitleRef = ref<HTMLElement | null>(null)
 
 const route = useRoute()
+const { memberId } = useUserStore()
 
 const isHome = computed(() => route.path === '/')
 
 onMounted(async () => {
-  const data = await getSido()
-  if (data) {
-    sidoList.value = data
+  if (isHome.value) {
+    const data = await getSido()
+    if (data) {
+      sidoList.value = data
+    } else {
+      alert('시/도 정보를 가져오는데 실패했습니다.')
+    }
   } else {
-    alert('시/도 정보를 가져오는데 실패했습니다.')
+    search()
   }
 })
 
@@ -170,28 +176,39 @@ const eubmyundongClick = (item: string) => {
 }
 
 const search = async (page: number = 1) => {
-  if (
-    (targetMinPrice.value && !isNaturalNumber(targetMinPrice.value, true)) ||
-    (targetMaxPrice.value && !isNaturalNumber(targetMaxPrice.value, true))
-  ) {
-    alert('가격은 0 이상의 숫자로 입력해주세요.')
-    return
-  }
-  if (targetMinPrice.value && targetMaxPrice.value && targetMinPrice.value > targetMaxPrice.value) {
-    alert('최소 가격은 최대 가격보다 작거나 같게 입력해주세요.')
-    return
+  if (isHome.value) {
+    if (
+      (targetMinPrice.value && !isNaturalNumber(targetMinPrice.value, true)) ||
+      (targetMaxPrice.value && !isNaturalNumber(targetMaxPrice.value, true))
+    ) {
+      alert('가격은 0 이상의 숫자로 입력해주세요.')
+      return
+    }
+    if (
+      targetMinPrice.value &&
+      targetMaxPrice.value &&
+      targetMinPrice.value > targetMaxPrice.value
+    ) {
+      alert('최소 가격은 최대 가격보다 작거나 같게 입력해주세요.')
+      return
+    }
   }
 
-  const data = await getApartments({
-    sidoName: selectedSido.value,
-    gugunName: selectedGugun.value,
-    dongName: selectedDong.value,
-    targetMinPrice: targetMinPrice.value,
-    targetMaxPrice: targetMaxPrice.value,
-    aptName: searchWord.value,
-    presentPage: page,
-    limit: 10,
-  })
+  const data = await (isHome
+    ? getApartments({
+        sidoName: selectedSido.value,
+        gugunName: selectedGugun.value,
+        dongName: selectedDong.value,
+        targetMinPrice: targetMinPrice.value,
+        targetMaxPrice: targetMaxPrice.value,
+        aptName: searchWord.value,
+        presentPage: page,
+        limit: 10,
+      })
+    : getLikes(memberId, {
+        presentPage: page,
+        limit: 10,
+      }))
 
   if (data) {
     apartments.value = data.data
