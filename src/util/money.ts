@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export function numberToKrMoney(amount: number): string {
+export const numberToKrMoney = (amount: number): string => {
   if (_.isNaN(amount) || amount < 0) {
     throw new Error('금액은 0 이상의 숫자여야 합니다.')
   }

@@ -1,3 +1,4 @@
+import type { TApartmentSearch } from '@/model'
 import axios from 'axios'
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
@@ -23,6 +24,18 @@ export const location = {
       params: {
         sido,
         gugun,
+      },
+    })
+  },
+}
+
+export const apartment = {
+  getApartments: async (query: TApartmentSearch) => {
+    return instance.get('/apartments', {
+      params: {
+        ...query,
+        targetMinPrice: Number(query.targetMinPrice),
+        targetMaxPrice: Number(query.targetMaxPrice),
       },
     })
   },

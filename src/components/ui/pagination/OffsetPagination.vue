@@ -48,6 +48,6 @@ interface PaginationProps {
   defaultPage?: number
 }
 
-withDefaults(defineProps<PaginationProps>(), { itemsPerPage: 15, defaultPage: 1 })
+withDefaults(defineProps<PaginationProps>(), { itemsPerPage: 10, defaultPage: 1 })
 defineEmits(['handleCurPage'])
 </script>

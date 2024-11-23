@@ -40,11 +40,13 @@
             <hr class="flex-grow" />
           </div>
           <detail-search v-if="isDetailSearch" />
-          <Button class="self-end" variant="outline">검색</Button>
+          <Button class="self-end" variant="outline" @click="search()">검색</Button>
         </section>
       </section>
       <div class="w-[24rem] flex flex-col gap-2">
-        <h2 class="text-xl">{{ isHome ? '검색 결과' : '즐겨찾기' }} ({{ apartments.length }})</h2>
+        <h2 class="text-xl" ref="resultTitleRef">
+          {{ isHome ? '검색 결과' : '즐겨찾기' }} ({{ totalResult }})
+        </h2>
         <ul class="flex flex-col gap-5">
           <li
             v-for="apartment in apartments"
@@ -56,7 +58,7 @@
         </ul>
         <offset-pagination
           class="mt-2"
-          :totalItem="apartments.length"
+          :totalItem="totalResult"
           :curPage="curPage"
           @handleCurPage="handleCurPage"
         />
@@ -74,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, type Ref } from 'vue'
+import { computed, onMounted, provide, ref, type Ref } from 'vue'
 import DropDown from '../ui/DropDown.vue'
 import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
@@ -82,23 +84,36 @@ import ArrowUpIcon from '../ui/icons/ArrowUpIcon.vue'
 import { Button } from '@/components/ui/button'
 import ApartmentCard from '@/components/apartment/ApartmentCard.vue'
 import ApartmentDetail from '@/components/apartment/ApartmentDetail.vue'
-import { apartments } from '@/mocks/data'
 import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 import type { TApartment } from '@/model'
 import { useRoute } from 'vue-router'
 import { getDong, getGugun, getSido } from '@/service/axios/location'
+import { getApartments } from '@/service/axios/apartment'
+import { moveScrollTo } from '@/mocks/util/scroll'
+import { isNaturalNumber } from '@/util/number'
 
 const sidoList = ref<string[]>([])
-const selectedSido = ref<string>('시/도')
 const gugunList = ref<string[]>([])
-const selectedGugun = ref<string>('시/군/구')
 const dongList = ref<string[]>([])
+const apartments = ref<TApartment[]>([])
+const totalResult = ref(0)
+
+const selectedSido = ref<string>('시/도')
+const selectedGugun = ref<string>('시/군/구')
 const selectedDong = ref<string>('읍/면/동')
+const targetMinPrice = ref<string>('')
+const targetMaxPrice = ref<string>('')
+const searchWord = ref('')
+provide('targetMinPrice', targetMinPrice)
+provide('targetMaxPrice', targetMaxPrice)
+provide('searchWord', searchWord)
 
 const dropdown = ref(0)
 const isDetailSearch = ref(false)
 const curPage = ref(1)
 const apartment: Ref<TApartment | null> = ref(null)
+
+const resultTitleRef = ref<HTMLElement | null>(null)
 
 const route = useRoute()
 
@@ -111,10 +126,6 @@ onMounted(async () => {
   } else {
     alert('시/도 정보를 가져오는데 실패했습니다.')
   }
-})
-
-watch(curPage, (nv, ov) => {
-  console.log(nv, ov)
 })
 
 const toggleSidoDropDown = () => {
@@ -146,19 +157,52 @@ const gugunClick = async (gugun: string) => {
   }
 }
 
+const toggleEubmyundongDropDown = () => {
+  dropdown.value = dropdown.value === 3 ? 0 : 3
+}
 const eubmyundongClick = (item: string) => {
   selectedDong.value = item
 }
-const toggleEubmyundongDropDown = () => {
-  dropdown.value = dropdown.value === 3 ? 0 : 3
+
+const search = async (page: number = 1) => {
+  if (
+    (targetMinPrice.value && !isNaturalNumber(targetMinPrice.value, true)) ||
+    (targetMaxPrice.value && !isNaturalNumber(targetMaxPrice.value, true))
+  ) {
+    alert('가격은 0 이상의 숫자로 입력해주세요.')
+    return
+  }
+  if (targetMinPrice.value && targetMaxPrice.value && targetMinPrice.value > targetMaxPrice.value) {
+    alert('최소 가격은 최대 가격보다 작거나 같게 입력해주세요.')
+    return
+  }
+
+  const data = await getApartments({
+    sidoName: selectedSido.value,
+    gugunName: selectedGugun.value,
+    dongName: selectedDong.value,
+    targetMinPrice: targetMinPrice.value,
+    targetMaxPrice: targetMaxPrice.value,
+    aptName: searchWord.value,
+    presentPage: page,
+    limit: 10,
+  })
+
+  if (data) {
+    apartments.value = data.data
+    totalResult.value = data.totalRow
+    moveScrollTo(resultTitleRef.value, 'start')
+  } else {
+    alert('검색 결과를 가져오는데 실패했습니다.')
+  }
 }
 
 const handleCurPage = (nextPage: number) => {
   curPage.value = nextPage
+  search(nextPage)
 }
 
 const handleApartmentClick = (clickedApartment: TApartment) => {
-  console.log(clickedApartment.id)
   apartment.value = clickedApartment
 }
 
