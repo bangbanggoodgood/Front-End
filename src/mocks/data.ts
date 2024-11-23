@@ -89,8 +89,6 @@ const generateApartmentsMock = (limit: number): TApartment[] => {
       infra,
       minDealAmount: 375000000,
       maxDealAmount: 412000000,
-      introduce:
-        '안녕하세요! 저는 2008년에 태어난 아파트예요. 교육 환경이 뛰어나고 편리한 생활 인프라를 자랑하며, 가족들과 함께 활기차고 편안한 삶을 꾸려나가기 딱 좋은 공간이에요! 😊',
       like: 1,
     })
   }
@@ -98,6 +96,8 @@ const generateApartmentsMock = (limit: number): TApartment[] => {
   return result
 }
 export const apartmentsMock: TApartment[] = generateApartmentsMock(100)
+export const aiCommentMock: string =
+  '안녕하세요! 저는 2008년에 태어난 아파트예요. 교육 환경이 뛰어나고 편리한 생활 인프라를 자랑하며, 가족들과 함께 활기차고 편안한 삶을 꾸려나가기 딱 좋은 공간이에요! 😊'
 
 // deal
 export const generateFiveYearsData = () => {

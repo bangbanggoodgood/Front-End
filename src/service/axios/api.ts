@@ -39,6 +39,13 @@ export const apartment = {
       },
     })
   },
+  getAiIntroduce: async (aptSeq: number) => {
+    return instance.get(`/comments`, {
+      params: {
+        aptSeq,
+      },
+    })
+  },
 }
 
 export const aiChat = {

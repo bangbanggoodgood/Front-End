@@ -21,3 +21,19 @@ export const getApartments = async (
     return false
   }
 }
+
+export const getAiIntroduces = async (
+  aptSeqs: number[],
+): Promise<Record<number, string> | false> => {
+  try {
+    const result: Record<number, string> = {}
+    for (const aptSeq of aptSeqs) {
+      const res = await apartment.getAiIntroduce(aptSeq)
+      result[aptSeq] = res.data.comment
+    }
+    return result
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}

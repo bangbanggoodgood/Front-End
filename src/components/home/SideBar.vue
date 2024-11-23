@@ -50,10 +50,10 @@
         <ul class="flex flex-col gap-5">
           <li
             v-for="apartment in apartments"
-            :id="apartment.id.toString()"
+            :key="apartment.id.toString()"
             @click="handleApartmentClick(apartment)"
           >
-            <apartment-card :apartment="apartment" />
+            <apartment-card :apartment="apartment" :introduce="aiIntroduces[apartment.id]" />
           </li>
         </ul>
         <offset-pagination
@@ -68,7 +68,11 @@
           v-if="apartment"
           class="absolute -left-8 translate-x-full h-[calc(100%-2rem)] overflow-y-auto rounded-xl z-10"
         >
-          <apartment-detail :apartment="apartment" @close-detail="closeDetail" />
+          <apartment-detail
+            :apartment="apartment"
+            :introduce="aiIntroduces[apartment.id]"
+            @close-detail="closeDetail"
+          />
         </section>
       </Transition>
     </aside>
@@ -88,7 +92,7 @@ import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 import type { TApartment } from '@/model'
 import { useRoute } from 'vue-router'
 import { getDong, getGugun, getSido } from '@/service/axios/location'
-import { getApartments } from '@/service/axios/apartment'
+import { getAiIntroduces, getApartments } from '@/service/axios/apartment'
 import { moveScrollTo } from '@/mocks/util/scroll'
 import { isNaturalNumber } from '@/util/number'
 
@@ -97,6 +101,7 @@ const gugunList = ref<string[]>([])
 const dongList = ref<string[]>([])
 const apartments = ref<TApartment[]>([])
 const totalResult = ref(0)
+const aiIntroduces = ref<Record<number, string>>({})
 
 const selectedSido = ref<string>('시/도')
 const selectedGugun = ref<string>('시/군/구')
@@ -191,6 +196,10 @@ const search = async (page: number = 1) => {
   if (data) {
     apartments.value = data.data
     totalResult.value = data.totalRow
+    const introduceData = await getAiIntroduces(data.data.map((item) => item.id))
+    if (introduceData) {
+      aiIntroduces.value = introduceData
+    }
     moveScrollTo(resultTitleRef.value, 'start')
   } else {
     alert('검색 결과를 가져오는데 실패했습니다.')

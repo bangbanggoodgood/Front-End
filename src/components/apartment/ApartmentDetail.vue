@@ -10,7 +10,7 @@
         <outlined-heart-icon v-else />
       </button>
     </div>
-    <ai-comment :introduce="apartment.introduce" type="detail" />
+    <ai-comment :introduce="introduce" type="detail" />
     <h2 class="text-lg mt-3">기본정보</h2>
     <apartment-info-table :apartment="apartment" />
     <h2 class="text-lg mt-3">로드뷰</h2>
@@ -58,19 +58,17 @@ import CloseIcon from '@/components/ui/icons/CloseIcon.vue'
 
 export interface ApartmentDetailProps {
   apartment: TApartment
+  introduce: string
 }
 const props = defineProps<ApartmentDetailProps>()
 defineEmits(['closeDetail'])
-
-// const apartment = ref(props.apartment)
-// const { aptNm, introduce } = apartment.value
 
 const duration = ref(1)
 const dealData = generateDealMock()
 const curDealPage = ref(1)
 
 const toggleFavorite = () => {
-  // TOOD: send like to server
+  // TODO: send like to server
   if (props.apartment.like) {
     alert('즐겨찾기를 해제했습니다.')
     props.apartment.like = 0

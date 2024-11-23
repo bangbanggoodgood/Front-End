@@ -36,7 +36,6 @@ export interface TApartment {
   infra: TInfraInfo
   minDealAmount: number
   maxDealAmount: number
-  introduce: string
   like: 0 | 1
 }
 export interface TApartmentSearch extends TPageRequest {

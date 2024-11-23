@@ -1,6 +1,6 @@
 import type { TMockRequest } from '@/model'
 import { HttpResponse } from 'msw'
-import { apartmentsMock } from '../data'
+import { aiCommentMock, apartmentsMock } from '../data'
 
 export const getApartments = async ({ request }: TMockRequest) => {
   const url = new URL(request.url)
@@ -9,5 +9,13 @@ export const getApartments = async ({ request }: TMockRequest) => {
   return HttpResponse.json({
     totalRow: apartmentsMock.length,
     aptDto: apartmentsMock.slice((presentPage - 1) * limit, presentPage * limit),
+  })
+}
+
+export const getAiIntroduce = async ({ request }: TMockRequest) => {
+  const url = new URL(request.url)
+  const aptSeq = Number(url.searchParams.get('aptSeq'))
+  return HttpResponse.json({
+    comment: `mock${aptSeq}: ` + aiCommentMock,
   })
 }

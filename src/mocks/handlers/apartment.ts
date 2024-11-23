@@ -1,6 +1,9 @@
 import { http } from 'msw'
-import { getApartments } from '../util/apartment'
+import { getAiIntroduce, getApartments } from '../util/apartment'
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
 
-export const handlers = [http.get(`${baseUrl}/apartments`, getApartments)]
+export const handlers = [
+  http.get(`${baseUrl}/apartments`, getApartments),
+  http.get(`${baseUrl}/comments`, getAiIntroduce),
+]

@@ -25,11 +25,11 @@
     </div>
     <Transition>
       <aside
-        v-if="needAi"
+        v-if="introduce"
         v-show="aiComment"
         class="absolute -right-1 top-0 translate-x-full overflow-visible z-20"
       >
-        <ai-comment :introduce="apartment.introduce" type="preview" />
+        <ai-comment :introduce="introduce" type="preview" />
       </aside>
     </Transition>
   </div>
@@ -45,24 +45,10 @@ import { getKeywords } from '@/util/apartment'
 
 interface Props {
   apartment: TApartment
-  needAi?: boolean
+  introduce?: string
 }
 
-withDefaults(defineProps<Props>(), {
-  needAi: true,
-})
-
-// const {
-//   aptNm,
-//   buildYear,
-//   minArea,
-//   maxArea,
-//   address,
-//   minDealAmount,
-//   maxDealAmount,
-//   infra,
-//   introduce,
-// } = props.apartment
+defineProps<Props>()
 
 const aiComment = ref(false)
 </script>
