@@ -8,6 +8,12 @@ const instance = axios.create({
   timeout: 5000,
 })
 
+export const user = {
+  getUser: async () => {
+    return instance.get(`/users`)
+  },
+}
+
 export const location = {
   getSido: async () => {
     return instance.get('/sido')
