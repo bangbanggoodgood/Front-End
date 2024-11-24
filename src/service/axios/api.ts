@@ -64,6 +64,7 @@ export const apartment = {
     return instance.get('/deals/detailGraph', {
       params: {
         aptSeq,
+        period: 5,
       },
     })
   },
