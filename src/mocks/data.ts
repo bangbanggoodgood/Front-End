@@ -31,7 +31,8 @@ export const sidoMock: TLocationResponse[] = [
   { name: '제주특별자치도' },
 ]
 
-export const gugunMock: TLocationResponse[] = [
+export const gugunMock: (TLocationResponse | null)[] = [
+  null,
   { name: '강남구' },
   { name: '강동구' },
   { name: '강북구' },
@@ -59,7 +60,8 @@ export const gugunMock: TLocationResponse[] = [
   { name: '중랑구' },
 ]
 
-export const dongMock: TLocationResponse[] = [
+export const dongMock: (TLocationResponse | null)[] = [
+  null,
   { name: '개포동' },
   { name: '논현동' },
   { name: '대치동' },
