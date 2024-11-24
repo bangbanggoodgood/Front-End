@@ -1,6 +1,7 @@
 import type { infraArray, infraArrayKr, keywords } from '@/lib/infra'
 import type { userRole } from '@/lib/user'
 import type { jobs } from '@/lib/job'
+import type { DefaultBodyType, PathParams, StrictRequest } from 'msw'
 
 // job, keyword, infra
 export type TJob = (typeof jobs)[number]
@@ -24,9 +25,14 @@ export interface TUserInfo extends TUser {
   categories: TKeyword[]
 }
 
+// location
+export interface TLocationResponse {
+  name: string
+}
+
 // apartment
 export interface TApartment {
-  id: number
+  aptSeq: string
   aptNm: string
   buildYear: string
   minArea: number
@@ -35,8 +41,15 @@ export interface TApartment {
   infra: TInfraInfo
   minDealAmount: number
   maxDealAmount: number
-  introduce: string
   like: 0 | 1
+}
+export interface TApartmentSearch extends TPageRequest {
+  sidoName: string
+  gugunName: string
+  dongName: string
+  targetMinPrice: string
+  targetMaxPrice: string
+  aptName: string
 }
 
 // deal
@@ -92,4 +105,39 @@ export type TPriceState = Record<string, number>
 export interface TChat {
   isAi: boolean
   message: string
+}
+
+// api
+export interface TPageRequest {
+  presentPage: number
+  limit: number
+}
+export interface TPageResponse<T> {
+  totalRow: number
+  data: T[]
+}
+
+// msw
+export interface TMockRequest {
+  request: StrictRequest<DefaultBodyType>
+  params: PathParams
+}
+
+// store
+export interface TMapStore {
+  map: any
+  coords: Record<string, any>
+  markers: any[]
+}
+
+// analysis
+export interface TAnalysis {
+  time: number
+  keywords: string[]
+  avgPrice: number
+  minPrice: number
+  maxPrice: number
+  sido: string
+  gugun: string
+  dong: string
 }

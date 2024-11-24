@@ -44,10 +44,10 @@ import { Button } from '@/components/ui/button'
 interface PaginationProps {
   totalItem: number
   curPage: number
-  itemsPerPage?: number
+  itemsPerPage: number
   defaultPage?: number
 }
 
-withDefaults(defineProps<PaginationProps>(), { itemsPerPage: 15, defaultPage: 1 })
+defineProps<PaginationProps>()
 defineEmits(['handleCurPage'])
 </script>

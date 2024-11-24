@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex justify-between items-center w-full rounded-full bg-background border border-primary h-10 px-2 cursor-pointer z-10"
+    class="relative flex justify-between items-center w-full rounded-full bg-background border border-primary min-h-10 px-2 cursor-pointer z-10"
     @click.stop="$emit('toggleDropDown')"
   >
     <span class="flex-grow text-center">{{ placeholder }}</span>

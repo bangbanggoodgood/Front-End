@@ -6,23 +6,26 @@
   >
     <div class="flex flex-col gap-3 cursor-pointer px-4 py-3">
       <div>
-        <h3 class="text-lg">{{ aptNm }}</h3>
-        <div class="text-text text-xs">{{ buildYear }} / {{ minArea }}m² ~ {{ maxArea }}m²</div>
+        <h3 class="text-lg">{{ apartment.aptNm }}</h3>
+        <div class="text-text text-xs">
+          {{ apartment.buildYear }} / {{ apartment.minArea }}m² ~ {{ apartment.maxArea }}m²
+        </div>
       </div>
       <div>
-        주소: {{ address }}
+        주소: {{ apartment.address }}
         <br />
-        매매가: {{ numberToKrMoney(minDealAmount) }} ~ {{ numberToKrMoney(maxDealAmount) }} 원
+        매매가: {{ numberToKrMoney(apartment.minDealAmount) }} ~
+        {{ numberToKrMoney(apartment.maxDealAmount) }} 원
       </div>
       <ul class="flex flex-wrap gap-2">
-        <li v-for="keyword in getKeywords(infra)" :key="keyword">
+        <li v-for="keyword in getKeywords(apartment.infra)" :key="keyword">
           <keyword-box :keyword="keyword" />
         </li>
       </ul>
     </div>
     <Transition>
       <aside
-        v-if="needAi"
+        v-if="introduce"
         v-show="aiComment"
         class="absolute -right-1 top-0 translate-x-full overflow-visible z-20"
       >
@@ -42,24 +45,10 @@ import { getKeywords } from '@/util/apartment'
 
 interface Props {
   apartment: TApartment
-  needAi?: boolean
+  introduce?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  needAi: true,
-})
-
-const {
-  aptNm,
-  buildYear,
-  minArea,
-  maxArea,
-  address,
-  minDealAmount,
-  maxDealAmount,
-  infra,
-  introduce,
-} = props.apartment
+defineProps<Props>()
 
 const aiComment = ref(false)
 </script>

@@ -12,7 +12,7 @@
         <router-link v-if="user.role === userRole.admin" :to="{ name: 'admin' }"
           >관리자 페이지</router-link
         >
-        <router-link :to="{ name: 'favorite' }">즐겨찾기</router-link>
+        <router-link :to="{ name: 'like' }">즐겨찾기</router-link>
         <router-link :to="{ name: 'didimdol' }">디딤돌 금리</router-link>
         <div class="flex items-center relative cursor-pointer" ref="dropdownRef">
           <button @click="toggleDropdown">

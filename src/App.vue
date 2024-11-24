@@ -8,14 +8,25 @@
 <script setup lang="ts">
 import HeaderBar from '@/components/layout/Header.vue'
 import { onMounted, ref } from 'vue'
-import { RouterView } from 'vue-router'
+import { RouterView, useRoute } from 'vue-router'
 import SurveyContainer from './components/survey/SurveyContainer.vue'
+import { sessionStorage } from './util/browserStorage'
 
 const didSurvey = ref(true)
+
+const route = useRoute()
 
 onMounted(() => {
   // TODO: check if user already did survey
   // didSurvey.value = false
+  const token = sessionStorage.getItem('access_token')
+  if (token) {
+    alert('로그인 api 요청')
+  } else {
+    if (route.query.accessToken) {
+      sessionStorage.setItem('access_token', route.query.accessToken)
+    }
+  }
 })
 </script>
 <style scoped>
