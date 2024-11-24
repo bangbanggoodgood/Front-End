@@ -16,27 +16,29 @@ export const loadKakaoMap = (container: any) => {
 
   script.onload = () => {
     window.kakao.maps.load(() => {
-      let center = new window.kakao.maps.LatLng(37.211471, 127.043012)
-      if (navigator.geolocation) {
-        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
-        navigator.geolocation.getCurrentPosition(function (position) {
-          const lat = position.coords.latitude,
-            lon = position.coords.longitude
+      const map = useMapStore()
 
-          center = new window.kakao.maps.LatLng(lat, lon) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
-        })
-      }
+      var center = new window.kakao.maps.LatLng(37.211471, 127.043012)
       const options = {
         center,
         level: 3, // 지도 확대 레벨
       }
-      const map = useMapStore()
 
       const mapInstance = new window.kakao.maps.Map(container, options) // 지도 생성
       var zoomControl = new window.kakao.maps.ZoomControl()
       mapInstance.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT)
 
       map.setMap(mapInstance)
+      if (window.navigator.geolocation) {
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        window.navigator.geolocation.getCurrentPosition(function (position) {
+          const lat = position.coords.latitude,
+            lon = position.coords.longitude
+
+          center = new window.kakao.maps.LatLng(lat, lon) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+          mapInstance.setCenter(center)
+        })
+      }
     })
   }
 }
