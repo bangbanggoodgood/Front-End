@@ -117,3 +117,10 @@ export interface TMockRequest {
   request: StrictRequest<DefaultBodyType>
   params: PathParams
 }
+
+// store
+export interface TMapStore {
+  map: any
+  coords: any[]
+  markers: any[]
+}
