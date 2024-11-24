@@ -44,7 +44,10 @@ export const getLikes = async (
 ): Promise<TPageResponse<TApartment> | false> => {
   try {
     const res = await apartment.getLikes(memberId, { presentPage, limit })
-    return res.data
+    return {
+      totalRow: res.data.totalRow,
+      data: res.data.aptDto,
+    }
   } catch (e) {
     console.error(e)
     return false

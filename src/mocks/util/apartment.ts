@@ -34,6 +34,6 @@ export const getDealChartMock = async ({ request }: TMockRequest) => {
   const limit = Number(url.searchParams.get('limit'))
   return HttpResponse.json({
     totalRow: dealChartMock.length,
-    data: dealChartMock.slice((presentPage - 1) * limit, presentPage * limit),
+    aptDto: dealChartMock.slice((presentPage - 1) * limit, presentPage * limit),
   })
 }
