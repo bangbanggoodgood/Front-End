@@ -57,6 +57,8 @@ import OffsetPagination from '@/components/ui/pagination/OffsetPagination.vue'
 import CloseIcon from '@/components/ui/icons/CloseIcon.vue'
 import { getDealGraph, getDealList, postLike } from '@/service/axios/apartment'
 import { useUserStore } from '@/stores/user'
+import { useMapStore } from '@/stores/map'
+// import { searchPlace } from '@/util/map'
 
 export interface ApartmentDetailProps {
   apartment: TApartment
@@ -73,6 +75,7 @@ const duration = ref<number>(1)
 const curDealPage = ref<number>(1)
 
 const { memberId } = useUserStore()
+const map = useMapStore()
 
 const toggleFavorite = async () => {
   const res = await postLike(memberId, props.apartment.aptSeq)
@@ -96,13 +99,14 @@ const handleCurDealPage = (page: number) => {
 }
 
 watch(
-  props.apartment,
+  () => props.apartment,
   async (nv, ov) => {
     if (nv.aptSeq !== ov?.aptSeq) {
       const data = await getDealGraph(nv.aptSeq)
       if (data) {
         graphData.value = data
       }
+      // searchPlace(nv.address, nv.aptNm, map)
     }
   },
   {
@@ -112,7 +116,7 @@ watch(
 )
 
 watch(
-  [props.apartment, curDealPage],
+  [() => props.apartment, curDealPage],
   async ([nApt, nPage], [oApt, oPage]) => {
     if (nApt.aptSeq !== oApt?.aptSeq || nPage !== oPage) {
       const data = await getDealList(nApt.aptSeq, { presentPage: nPage, limit: 20 })

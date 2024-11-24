@@ -60,6 +60,7 @@
           class="mt-2"
           :totalItem="totalResult"
           :curPage="curPage"
+          :itemsPerPage="APARTMENT_LIMIT_PAGE"
           @handleCurPage="handleCurPage"
         />
       </div>
@@ -80,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, provide, ref, type Ref } from 'vue'
+import { computed, onMounted, provide, ref, watch, type Ref } from 'vue'
 import DropDown from '../ui/DropDown.vue'
 import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
@@ -96,6 +97,9 @@ import { getAiIntroduces, getApartments, getLikes } from '@/service/axios/apartm
 import { moveScrollTo } from '@/mocks/util/scroll'
 import { isNaturalNumber } from '@/util/number'
 import { useUserStore } from '@/stores/user'
+import { searchPlaces } from '@/util/map'
+import { useMapStore } from '@/stores/map'
+import { APARTMENT_LIMIT_PAGE } from '@/lib/pagination'
 
 const sidoList = ref<string[]>([])
 const gugunList = ref<string[]>([])
@@ -123,6 +127,7 @@ const resultTitleRef = ref<HTMLElement | null>(null)
 
 const route = useRoute()
 const { memberId } = useUserStore()
+const map = useMapStore()
 
 const isHome = computed(() => route.path === '/')
 
@@ -203,11 +208,11 @@ const search = async (page: number = 1) => {
         targetMaxPrice: targetMaxPrice.value,
         aptName: searchWord.value,
         presentPage: page,
-        limit: 10,
+        limit: APARTMENT_LIMIT_PAGE,
       })
     : getLikes(memberId, {
         presentPage: page,
-        limit: 10,
+        limit: APARTMENT_LIMIT_PAGE,
       }))
 
   if (data) {
@@ -217,11 +222,30 @@ const search = async (page: number = 1) => {
     if (introduceData) {
       aiIntroduces.value = introduceData
     }
+    searchPlaces(
+      data.data.map((item) => item.address),
+      map,
+    )
     moveScrollTo(resultTitleRef.value, 'start')
   } else {
     alert('검색 결과를 가져오는데 실패했습니다.')
   }
 }
+watch(
+  () => map.coords,
+  (nv) => {
+    if (nv.length > 0) {
+      var bounds = new window.kakao.maps.LatLngBounds()
+      for (const coord of nv) {
+        bounds.extend(coord)
+      }
+      map.map.setBounds(bounds)
+    }
+  },
+  {
+    deep: true,
+  },
+)
 
 const handleCurPage = (nextPage: number) => {
   curPage.value = nextPage

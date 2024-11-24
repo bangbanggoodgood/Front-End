@@ -67,6 +67,18 @@ export const dongMock: string[] = [
 ]
 
 // apartment
+const addressMock = [
+  '서울 강남구 테헤란로 212',
+  '서울 강남구 테헤란로 216',
+  '서울 강남구 언주로85길 14',
+  '서울 강남구 테헤란로 211',
+  '서울 강남구 테헤란로 134',
+  '서울 서초구 서초대로78길 24',
+  '서울 강남구 테헤란로1길 16',
+  '서울 강남구 테헤란로 138',
+  '서울 강남구 테헤란로 123',
+  '서울 강남구 테헤란로10길 21',
+]
 const generateApartmentsMock = (limit: number): TApartment[] => {
   const result: TApartment[] = []
   for (let i = 1; i <= limit; i++) {
@@ -85,7 +97,7 @@ const generateApartmentsMock = (limit: number): TApartment[] => {
       buildYear: '2001',
       minArea: 180.43,
       maxArea: 216.93,
-      address: '경기도 성남시 분당구 쇳골로 22',
+      address: addressMock[i % addressMock.length],
       infra,
       minDealAmount: 375000000,
       maxDealAmount: 412000000,

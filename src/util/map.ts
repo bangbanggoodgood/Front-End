@@ -1,3 +1,5 @@
+import { useMapStore } from '@/stores/map'
+
 const { VITE_APP_KAKAO_MAP_KEY } = import.meta.env
 
 export const loadKakaoMap = (container: any) => {
@@ -13,13 +15,27 @@ export const loadKakaoMap = (container: any) => {
 
   script.onload = () => {
     window.kakao.maps.load(() => {
-      const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667), // 지도 중심 좌표
-        level: 3, // 지도 확대 레벨
-        maxLevel: 5, // 지도 축소 제한 레벨
+      let center = new window.kakao.maps.LatLng(37.211471, 127.043012)
+      if (navigator.geolocation) {
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const lat = position.coords.latitude,
+            lon = position.coords.longitude
+
+          center = new window.kakao.maps.LatLng(lat, lon) // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+        })
       }
+      const options = {
+        center,
+        level: 3, // 지도 확대 레벨
+      }
+      const map = useMapStore()
 
       const mapInstance = new window.kakao.maps.Map(container, options) // 지도 생성
+      var zoomControl = new window.kakao.maps.ZoomControl()
+      mapInstance.addControl(zoomControl, window.kakao.maps.ControlPosition.RIGHT)
+
+      map.setMap(mapInstance)
     })
   }
 }
@@ -38,4 +54,51 @@ export const loadRoadView = (container: any) => {
       })
     }
   })
+}
+
+export const searchPlaces = (keywords: string[], mapStore: any) => {
+  mapStore.removeMarkers()
+  var geocoder = new window.kakao.maps.services.Geocoder()
+  // var bounds = new window.kakao.maps.LatLngBounds()
+  for (const keyword of keywords) {
+    console.log(keyword)
+    geocoder.addressSearch(keyword, function (result: any, status: any) {
+      // 정상적으로 검색이 완료됐으면
+      if (status === window.kakao.maps.services.Status.OK) {
+        var coord = new window.kakao.maps.LatLng(result[0].y, result[0].x)
+
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new window.kakao.maps.Marker({
+          map: mapStore.map,
+          position: coord,
+        })
+
+        mapStore.addMarker(marker)
+        mapStore.addCoords(coord)
+        // mapStore.map.setCenter(coord)
+        // bounds.extend(coord)
+        // console.log(coord, bounds)
+        // // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        // mapStore.map.setCenter(
+        //   new window.kakao.maps.LatLng(result[0].y, Number(result[0].x) - 0.0028),
+        // )
+      }
+    })
+  }
+  // return bounds
+}
+
+export const displayMarker = (place: any, mapStore: any) => {
+  // 마커를 생성하고 지도에 표시합니다
+  var infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 })
+  var marker = new window.kakao.maps.Marker({
+    map: mapStore.map,
+    position: new window.kakao.maps.LatLng(place.y, place.x),
+  })
+
+  // 마커에 클릭이벤트를 등록합니다
+  window.kakao.maps.event.addListener(marker, 'click', function () {
+    infowindow.open(mapStore.map, marker)
+  })
+  mapStore.setMarker(marker)
 }
