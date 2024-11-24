@@ -78,37 +78,24 @@ export const searchPlaces = (
         })
         window.kakao.maps.event.addListener(marker, 'click', () => {
           handleApartmentClick(apartment)
-          mapStore.map.panTo(
-            new window.kakao.maps.LatLng(result[0].y, Number(result[0].x) - 0.0028),
-          )
+          mapStore.map.panTo(new window.kakao.maps.LatLng(coord.getLat(), coord.getLng() - 0.0028))
+        })
+        var position = new window.kakao.maps.LatLng(coord.getLat() + 0.00105, coord.getLng())
+        var overlay: any = null
+        window.kakao.maps.event.addListener(marker, 'mouseover', () => {
+          overlay = new window.kakao.maps.CustomOverlay({
+            position,
+            content: `<div class="px-2 py-1 text-sm bg-white rounded-md shadow-md border">${apartment.aptNm}</div>`,
+          })
+          overlay.setMap(mapStore.map)
+        })
+        window.kakao.maps.event.addListener(marker, 'mouseout', () => {
+          overlay.setMap(null)
         })
 
         mapStore.addMarker(marker)
-        mapStore.addCoords(coord)
-        // mapStore.map.setCenter(coord)
-        // bounds.extend(coord)
-        // console.log(coord, bounds)
-        // // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        // mapStore.map.setCenter(
-        //   new window.kakao.maps.LatLng(result[0].y, Number(result[0].x) - 0.0028),
-        // )
+        mapStore.addCoord(apartment.aptSeq, coord)
       }
     })
   }
-  // return bounds
-}
-
-export const displayMarker = (place: any, mapStore: any) => {
-  // 마커를 생성하고 지도에 표시합니다
-  var infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 })
-  var marker = new window.kakao.maps.Marker({
-    map: mapStore.map,
-    position: new window.kakao.maps.LatLng(place.y, place.x),
-  })
-
-  // 마커에 클릭이벤트를 등록합니다
-  window.kakao.maps.event.addListener(marker, 'click', function () {
-    infowindow.open(mapStore.map, marker)
-  })
-  mapStore.setMarker(marker)
 }

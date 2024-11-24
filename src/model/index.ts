@@ -121,6 +121,6 @@ export interface TMockRequest {
 // store
 export interface TMapStore {
   map: any
-  coords: any[]
+  coords: Record<string, any>
   markers: any[]
 }

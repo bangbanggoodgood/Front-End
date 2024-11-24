@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, provide, ref, watch, type Ref } from 'vue'
+import { computed, onMounted, onUnmounted, provide, ref, watch, type Ref } from 'vue'
 import DropDown from '../ui/DropDown.vue'
 import ArrowDownIcon from '../ui/icons/ArrowDownIcon.vue'
 import DetailSearch from './DetailSearch.vue'
@@ -131,6 +131,8 @@ const map = useMapStore()
 
 const isHome = computed(() => route.path === '/')
 
+let timeoutId: number
+
 onMounted(async () => {
   if (isHome.value) {
     const data = await getSido()
@@ -140,8 +142,13 @@ onMounted(async () => {
       alert('시/도 정보를 가져오는데 실패했습니다.')
     }
   } else {
-    search()
+    timeoutId = setTimeout(() => {
+      search()
+    }, 1000)
   }
+})
+onUnmounted(() => {
+  clearTimeout(timeoutId)
 })
 
 const toggleSidoDropDown = () => {
@@ -236,9 +243,9 @@ const search = async (page: number = 1) => {
 watch(
   () => map.coords,
   (nv) => {
-    if (nv.length > 0) {
+    if (Object.keys(nv).length > 0) {
       var bounds = new window.kakao.maps.LatLngBounds()
-      for (const coord of nv) {
+      for (const coord of Object.values(nv)) {
         bounds.extend(coord)
       }
       map.map.setBounds(bounds)
@@ -257,6 +264,8 @@ const handleCurPage = (nextPage: number) => {
 
 const handleApartmentClick = (clickedApartment: TApartment) => {
   apartment.value = clickedApartment
+  const coord = map.coords[clickedApartment.aptSeq]
+  map.map.panTo(new window.kakao.maps.LatLng(coord.getLat(), coord.getLng() - 0.0028))
 }
 
 const closeDetail = () => {

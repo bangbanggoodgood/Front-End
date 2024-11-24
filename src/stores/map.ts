@@ -2,16 +2,16 @@ import type { TMapStore } from '@/model'
 import { defineStore } from 'pinia'
 
 export const useMapStore = defineStore('map', {
-  state: (): TMapStore => ({ map: null, coords: [], markers: [] }),
+  state: (): TMapStore => ({ map: null, coords: {}, markers: [] }),
   actions: {
     setMap(map: any): void {
       this.map = map
     },
-    addCoords(coord: any): void {
-      this.coords.push(coord)
+    addCoord(key: string, coord: any): void {
+      this.coords[key] = coord
     },
     removeCoords(): void {
-      this.coords = []
+      this.coords = {}
     },
     addMarker(marker: any): void {
       this.markers.push(marker)
