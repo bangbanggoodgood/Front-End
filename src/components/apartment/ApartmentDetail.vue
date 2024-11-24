@@ -51,14 +51,13 @@ import DealChart from '../chart/DealChart.vue'
 import { convertDealToChartItems } from '@/util/apartment'
 import FilledHeartIcon from '../ui/icons/FilledHeartIcon.vue'
 import OutlinedHeartIcon from '../ui/icons/OutlinedHeartIcon.vue'
-import { computed, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import DealTable from './DealTable.vue'
 import OffsetPagination from '@/components/ui/pagination/OffsetPagination.vue'
 import CloseIcon from '@/components/ui/icons/CloseIcon.vue'
 import { getDealGraph, getDealList, postLike } from '@/service/axios/apartment'
 import { useUserStore } from '@/stores/user'
-import { useMapStore } from '@/stores/map'
-// import { searchPlace } from '@/util/map'
+import { sendAnalysis } from '@/service/analysis'
 
 export interface ApartmentDetailProps {
   apartment: TApartment
@@ -75,7 +74,6 @@ const duration = ref<number>(1)
 const curDealPage = ref<number>(1)
 
 const { memberId } = useUserStore()
-const map = useMapStore()
 
 const toggleFavorite = async () => {
   const res = await postLike(memberId, props.apartment.aptSeq)
@@ -106,7 +104,6 @@ watch(
       if (data) {
         graphData.value = data
       }
-      // searchPlace(nv.address, nv.aptNm, map)
     }
   },
   {
@@ -131,4 +128,57 @@ watch(
     immediate: true,
   },
 )
+
+let prevTime = Date.now()
+onMounted(() => {
+  prevTime = Date.now()
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
+})
+
+watch(
+  () => props.apartment,
+  async (nv, ov) => {
+    if (nv.aptSeq !== ov?.aptSeq) {
+      const nextTime = Date.now()
+      const time = (nextTime - prevTime) / 1000
+      sendAnalysis({
+        time,
+        keywords: [],
+        avgPrice: (nv.minDealAmount + nv.maxDealAmount) / 2,
+        minPrice: nv.minDealAmount,
+        maxPrice: nv.maxDealAmount,
+        sido: '',
+        gugun: '',
+        dong: '',
+      })
+      prevTime = nextTime
+    }
+  },
+  {
+    deep: true,
+  },
+)
+
+const handleVisibilityChange = () => {
+  if (document.hidden || document.visibilityState === 'hidden') {
+    const nextTime = Date.now()
+    const time = (nextTime - prevTime) / 1000
+    sendAnalysis({
+      time,
+      keywords: [],
+      avgPrice: (props.apartment.minDealAmount + props.apartment.maxDealAmount) / 2,
+      minPrice: props.apartment.minDealAmount,
+      maxPrice: props.apartment.maxDealAmount,
+      sido: '',
+      gugun: '',
+      dong: '',
+    })
+  } else {
+    prevTime = Date.now()
+  }
+}
 </script>
