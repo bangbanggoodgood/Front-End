@@ -25,6 +25,11 @@ export interface TUserInfo extends TUser {
   categories: TKeyword[]
 }
 
+// location
+export interface TLocationResponse {
+  name: string
+}
+
 // apartment
 export interface TApartment {
   aptSeq: string
