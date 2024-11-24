@@ -39,7 +39,7 @@ export const apartment = {
       },
     })
   },
-  getAiIntroduce: async (aptSeq: number) => {
+  getAiIntroduce: async (aptSeq: string) => {
     return instance.get(`/comments`, {
       params: {
         aptSeq,
@@ -54,20 +54,20 @@ export const apartment = {
       },
     })
   },
-  postLike: async (memberId: number, aptSeq: number) => {
+  postLike: async (memberId: number, aptSeq: string) => {
     return instance.post('/likes', {
       memberId,
       aptSeq,
     })
   },
-  getDealGraph: async (aptSeq: number) => {
+  getDealGraph: async (aptSeq: string) => {
     return instance.get('/deals/detailGraph', {
       params: {
         aptSeq,
       },
     })
   },
-  getDealList: async (aptSeq: number, { presentPage, limit }: TPageRequest) => {
+  getDealList: async (aptSeq: string, { presentPage, limit }: TPageRequest) => {
     return instance.get('/deals/detailChart', {
       params: {
         aptSeq,

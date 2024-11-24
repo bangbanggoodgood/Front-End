@@ -50,7 +50,7 @@
         <ul class="flex flex-col gap-5">
           <li
             v-for="apartment in apartments"
-            :key="apartment.aptSeq.toString()"
+            :key="apartment.aptSeq"
             @click="handleApartmentClick(apartment)"
           >
             <apartment-card :apartment="apartment" :introduce="aiIntroduces[apartment.aptSeq]" />
@@ -106,7 +106,7 @@ const gugunList = ref<string[]>([])
 const dongList = ref<string[]>([])
 const apartments = ref<TApartment[]>([])
 const totalResult = ref(0)
-const aiIntroduces = ref<Record<number, string>>({})
+const aiIntroduces = ref<Record<string, string>>({})
 
 const selectedSido = ref<string>('시/도')
 const selectedGugun = ref<string>('시/군/구')

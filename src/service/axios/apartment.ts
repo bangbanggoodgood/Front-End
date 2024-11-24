@@ -23,10 +23,10 @@ export const getApartments = async (
 }
 
 export const getAiIntroduces = async (
-  aptSeqs: number[],
-): Promise<Record<number, string> | false> => {
+  aptSeqs: string[],
+): Promise<Record<string, string> | false> => {
   try {
-    const result: Record<number, string> = {}
+    const result: Record<string, string> = {}
     for (const aptSeq of aptSeqs) {
       const res = await apartment.getAiIntroduce(aptSeq)
       result[aptSeq] = res.data.comment
@@ -51,7 +51,7 @@ export const getLikes = async (
   }
 }
 
-export const postLike = async (memberId: number, aptSeq: number): Promise<boolean> => {
+export const postLike = async (memberId: number, aptSeq: string): Promise<boolean> => {
   try {
     await apartment.postLike(memberId, aptSeq)
     return true
@@ -61,7 +61,7 @@ export const postLike = async (memberId: number, aptSeq: number): Promise<boolea
   }
 }
 
-export const getDealGraph = async (aptSeq: number): Promise<Record<string, number> | false> => {
+export const getDealGraph = async (aptSeq: string): Promise<Record<string, number> | false> => {
   try {
     const res = await apartment.getDealGraph(aptSeq)
     return res.data
@@ -72,7 +72,7 @@ export const getDealGraph = async (aptSeq: number): Promise<Record<string, numbe
 }
 
 export const getDealList = async (
-  aptSeq: number,
+  aptSeq: string,
   { presentPage, limit }: TPageRequest,
 ): Promise<TPageResponse<TDeal> | false> => {
   try {

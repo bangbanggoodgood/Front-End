@@ -27,7 +27,7 @@ export interface TUserInfo extends TUser {
 
 // apartment
 export interface TApartment {
-  aptSeq: number
+  aptSeq: string
   aptNm: string
   buildYear: string
   minArea: number
