@@ -25,6 +25,13 @@ export interface TUserInfo extends TUser {
   job: TJob
   categories: TKeyword[]
 }
+export interface TUserSignUp {
+  name: string
+  birth: string
+  sex: string
+  job: string
+  useId: string
+}
 
 // location
 export interface TLocationResponse {

@@ -1,4 +1,4 @@
-import type { TApartmentSearch, TPageRequest } from '@/model'
+import type { TApartmentSearch, TPageRequest, TUserSignUp } from '@/model'
 import axios from 'axios'
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
@@ -9,8 +9,18 @@ const instance = axios.create({
 })
 
 export const user = {
+  signUp: async (info: TUserSignUp) => {
+    return instance.post('users/signUp', {
+      ...info,
+    })
+  },
   getUser: async () => {
     return instance.get(`/users`)
+  },
+  checkId: async (memberId: string) => {
+    return instance.post('/users/check', {
+      memberId,
+    })
   },
 }
 
