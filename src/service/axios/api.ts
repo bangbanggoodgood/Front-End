@@ -80,10 +80,10 @@ export const apartment = {
 }
 
 export const aiChat = {
-  postAiChat: async (message: string) => {
+  postAiChat: async (question: string) => {
     return instance.post('/questions', {
       data: {
-        message,
+        question,
       },
     })
   },
