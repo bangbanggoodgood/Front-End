@@ -8,6 +8,10 @@ const instance = axios.create({
   timeout: 5000,
 })
 
+export const insertToken = (token: string) => {
+  instance.defaults.headers.common['Authorization'] = 'Bearer ' + token
+}
+
 export const user = {
   signUp: async (info: TUserSignUp) => {
     return instance.post('users/signUp', {

@@ -149,3 +149,8 @@ export interface TAnalysis {
   gugun: string
   dong: string
 }
+
+// browserStorage
+export interface TStorage {
+  value: any
+}
