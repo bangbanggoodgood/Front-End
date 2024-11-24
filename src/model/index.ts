@@ -15,10 +15,11 @@ export interface TInfraInfo extends Record<TInfra, number> {}
 export type TUserRole = (typeof userRole)[keyof typeof userRole]
 export interface TUser {
   memberId: number
-  name: string
   role: TUserRole
 }
 export interface TUserInfo extends TUser {
+  useId: string
+  name: string
   birth: string
   sex: string
   job: TJob

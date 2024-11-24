@@ -3,6 +3,10 @@
     <tbody class="divide-y">
       <tr class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">이름</td>
+        <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.useId }}</td>
+      </tr>
+      <tr class="grid grid-cols-9 divide-x">
+        <td class="flex justify-center items-center py-3 bg-background col-span-2">이름</td>
         <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.name }}</td>
       </tr>
       <tr class="grid grid-cols-9 divide-x">
