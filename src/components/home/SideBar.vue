@@ -223,8 +223,10 @@ const search = async (page: number = 1) => {
       aiIntroduces.value = introduceData
     }
     searchPlaces(
-      data.data.map((item) => item.address),
+      data.data,
+      // data.data.map((item) => item.address),
       map,
+      handleApartmentClick,
     )
     moveScrollTo(resultTitleRef.value, 'start')
   } else {
@@ -249,6 +251,7 @@ watch(
 
 const handleCurPage = (nextPage: number) => {
   curPage.value = nextPage
+  apartment.value = null
   search(nextPage)
 }
 

@@ -1,3 +1,4 @@
+import type { TApartment } from '@/model'
 import { useMapStore } from '@/stores/map'
 
 const { VITE_APP_KAKAO_MAP_KEY } = import.meta.env
@@ -56,13 +57,16 @@ export const loadRoadView = (container: any) => {
   })
 }
 
-export const searchPlaces = (keywords: string[], mapStore: any) => {
+export const searchPlaces = (
+  apartments: TApartment[],
+  mapStore: any,
+  handleApartmentClick: (apartment: TApartment) => void,
+) => {
   mapStore.removeMarkers()
   var geocoder = new window.kakao.maps.services.Geocoder()
   // var bounds = new window.kakao.maps.LatLngBounds()
-  for (const keyword of keywords) {
-    console.log(keyword)
-    geocoder.addressSearch(keyword, function (result: any, status: any) {
+  for (const apartment of apartments) {
+    geocoder.addressSearch(apartment.address, function (result: any, status: any) {
       // 정상적으로 검색이 완료됐으면
       if (status === window.kakao.maps.services.Status.OK) {
         var coord = new window.kakao.maps.LatLng(result[0].y, result[0].x)
@@ -71,6 +75,12 @@ export const searchPlaces = (keywords: string[], mapStore: any) => {
         var marker = new window.kakao.maps.Marker({
           map: mapStore.map,
           position: coord,
+        })
+        window.kakao.maps.event.addListener(marker, 'click', () => {
+          handleApartmentClick(apartment)
+          mapStore.map.panTo(
+            new window.kakao.maps.LatLng(result[0].y, Number(result[0].x) - 0.0028),
+          )
         })
 
         mapStore.addMarker(marker)
