@@ -9,7 +9,8 @@ import HeaderBar from '@/components/layout/Header.vue'
 import { onMounted, ref, watch } from 'vue'
 import { RouterView, useRoute, useRouter } from 'vue-router'
 import { sessionStorage } from './util/browserStorage'
-import { insertToken } from './service/axios/api'
+import { insertToken } from './service/axios/auth'
+import { useUserStore } from './stores/user'
 
 // const didSurvey = ref(true)
 const showMain = ref(false)
@@ -17,12 +18,14 @@ const showMain = ref(false)
 const route = useRoute()
 const router = useRouter()
 
+const userStore = useUserStore()
+
 onMounted(() => {
   // TODO: check if user already did survey
   // didSurvey.value = false
   const token = sessionStorage.getItem('access_token')
   if (token) {
-    insertToken(token.value)
+    insertToken(token.value, userStore)
     showMain.value = true
   } else {
     if (route.query.accessToken) {
@@ -38,7 +41,7 @@ watch(
   (nv) => {
     const token = sessionStorage.getItem('access_token')
     if (token) {
-      insertToken(token.value)
+      insertToken(token.value, userStore)
       showMain.value = true
     } else {
       if (nv.accessToken) {

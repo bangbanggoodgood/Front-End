@@ -3,6 +3,14 @@ import type { userRole } from '@/lib/user'
 import type { jobs } from '@/lib/job'
 import type { DefaultBodyType, PathParams, StrictRequest } from 'msw'
 
+// jwt
+export interface TJwt {
+  auth: TUserRole
+  memberId: number
+  sub: number
+  exp: number
+}
+
 // job, keyword, infra
 export type TJob = (typeof jobs)[number]
 

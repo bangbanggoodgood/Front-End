@@ -1,28 +1,54 @@
-import type { TApartmentSearch, TPageRequest, TUserSignUp } from '@/model'
+import type { TApartmentSearch, TJwt, TPageRequest, TUserSignUp } from '@/model'
 import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
 
-const instance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: baseUrl,
   timeout: 5000,
 })
 
-export const insertToken = (token: string) => {
-  instance.defaults.headers.common['Authorization'] = 'Bearer ' + token
-}
+// let interceptor: number
+// export const insertToken = (token: string, userStore: any) => {
+//   console.log('insertToken', token)
+//   const decodedToken: TJwt = jwtDecode(token)
+//   axiosInstance.defaults.headers.common['Authorization'] = 'Bearer ' + token
+//   if (decodedToken) {
+//     const { memberId, auth, exp } = decodedToken
+//     if (memberId && auth) {
+//       userStore.login({ memberId, role: auth })
+//     }
+//     interceptor = axiosInstance.interceptors.request.use((config) => {
+//       const currentTime = Date.now() / 1000
+//       if (exp && exp < currentTime) {
+//         logout(userStore, '/')
+//         return Promise.reject('Token expired')
+//       }
+//       return config
+//     })
+//   }
+// }
+
+// export const logout = (userStore: any, href: string) => {
+//   userStore.logout()
+//   sessionStorage.removeItem('access_token')
+//   axiosInstance.defaults.headers.common['Authorization'] = undefined
+//   axiosInstance.interceptors.request.eject(interceptor)
+//   window.location.href = href
+// }
 
 export const user = {
   signUp: async (info: TUserSignUp) => {
-    return instance.post('users/signUp', {
+    return axiosInstance.post('users/signUp', {
       ...info,
     })
   },
   getUser: async () => {
-    return instance.get(`/users`)
+    return axiosInstance.get(`/users`)
   },
   checkId: async (memberId: string) => {
-    return instance.post('/users/check', {
+    return axiosInstance.post('/users/check', {
       memberId,
     })
   },
@@ -30,17 +56,17 @@ export const user = {
 
 export const location = {
   getSido: async () => {
-    return instance.get('/sido')
+    return axiosInstance.get('/sido')
   },
   getGugun: async (sido: string) => {
-    return instance.get('/gugun', {
+    return axiosInstance.get('/gugun', {
       params: {
         sido,
       },
     })
   },
   getDong: async (sido: string, gugun: string) => {
-    return instance.get('/dong', {
+    return axiosInstance.get('/dong', {
       params: {
         sido,
         gugun,
@@ -51,7 +77,7 @@ export const location = {
 
 export const apartment = {
   getApartments: async (query: TApartmentSearch) => {
-    return instance.get('/apartments', {
+    return axiosInstance.get('/apartments', {
       params: {
         ...query,
         targetMinPrice: Number(query.targetMinPrice),
@@ -60,14 +86,14 @@ export const apartment = {
     })
   },
   getAiIntroduce: async (aptSeq: string) => {
-    return instance.get(`/comments`, {
+    return axiosInstance.get(`/comments`, {
       params: {
         aptSeq,
       },
     })
   },
   getLikes: async (memberId: number, { limit, presentPage }: TPageRequest) => {
-    return instance.get(`/likes/${memberId}`, {
+    return axiosInstance.get(`/likes/${memberId}`, {
       params: {
         limit,
         presentPage,
@@ -75,13 +101,13 @@ export const apartment = {
     })
   },
   postLike: async (memberId: number, aptSeq: string) => {
-    return instance.post('/likes', {
+    return axiosInstance.post('/likes', {
       memberId,
       aptSeq,
     })
   },
   getDealGraph: async (aptSeq: string) => {
-    return instance.get('/deals/detailGraph', {
+    return axiosInstance.get('/deals/detailGraph', {
       params: {
         aptSeq,
         period: 5,
@@ -89,7 +115,7 @@ export const apartment = {
     })
   },
   getDealList: async (aptSeq: string, { presentPage, limit }: TPageRequest) => {
-    return instance.get('/deals/detailChart', {
+    return axiosInstance.get('/deals/detailChart', {
       params: {
         aptSeq,
         presentPage,
@@ -101,7 +127,7 @@ export const apartment = {
 
 export const aiChat = {
   postAiChat: async (question: string) => {
-    return instance.post('/questions', {
+    return axiosInstance.post('/questions', {
       data: {
         question,
       },

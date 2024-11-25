@@ -8,4 +8,7 @@ export const sessionStorage = {
     const value = window.sessionStorage.getItem(key)
     return value ? JSON.parse(value) : null
   },
+  removeItem: (key: string): void => {
+    window.sessionStorage.removeItem(key)
+  },
 }

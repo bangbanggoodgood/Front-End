@@ -27,7 +27,7 @@
         </div>
       </template>
       <template v-else>
-        <a @click="login">로그인</a>
+        <a :href="KAKAO_AUTH_URL">로그인</a>
       </template>
     </div>
   </header>
@@ -41,6 +41,9 @@ import router from '@/router'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { userRole } from '@/lib/user'
 import AiChat from '../ai/AiChat.vue'
+import { logout } from '@/service/axios/auth'
+
+const KAKAO_AUTH_URL = import.meta.env.VITE_APP_KAKAO_AUTH_URL
 
 const user = useUserStore()
 
@@ -69,10 +72,10 @@ onBeforeUnmount(() => {
   document.removeEventListener('click', handleOutsideClick)
 })
 
-const login = () => {
-  alert('login')
-  user.login({ memberId: 1, role: userRole.admin })
-}
+// const login = () => {
+//   alert('login')
+//   user.login({ memberId: 1, role: userRole.admin })
+// }
 
 const toggleDropdown = () => {
   dropdown.value = !dropdown.value
@@ -82,13 +85,12 @@ const dropdownClick = (value: string) => {
   if (value === '내 정보') {
     router.push({ name: 'myinfo' })
   } else {
-    logout()
+    logoutClick()
   }
   toggleDropdown()
 }
 
-const logout = () => {
-  alert('hi')
-  user.logout()
+const logoutClick = () => {
+  logout(user, '/')
 }
 </script>
