@@ -80,7 +80,10 @@ export const getDealList = async (
 ): Promise<TPageResponse<TDeal> | false> => {
   try {
     const res = await apartment.getDealList(aptSeq, { presentPage, limit })
-    return res.data
+    return {
+      totalRow: res.data.totalRow,
+      data: res.data.aptDto,
+    }
   } catch (e) {
     console.error(e)
     return false
