@@ -16,7 +16,7 @@ export const getAiIntroduceMock = async ({ request }: TMockRequest) => {
   const url = new URL(request.url)
   const aptSeq = Number(url.searchParams.get('aptSeq'))
   return HttpResponse.json({
-    comment: `mock${aptSeq}: ` + aiCommentMock,
+    content: `mock${aptSeq}: ` + aiCommentMock,
   })
 }
 
@@ -34,6 +34,6 @@ export const getDealChartMock = async ({ request }: TMockRequest) => {
   const limit = Number(url.searchParams.get('limit'))
   return HttpResponse.json({
     totalRow: dealChartMock.length,
-    aptDto: dealChartMock.slice((presentPage - 1) * limit, presentPage * limit),
+    data: dealChartMock.slice((presentPage - 1) * limit, presentPage * limit),
   })
 }

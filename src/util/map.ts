@@ -43,12 +43,12 @@ export const loadKakaoMap = (container: any) => {
   }
 }
 
-export const loadRoadView = (container: any) => {
+export const loadRoadView = (container: any, address: string) => {
   const roadView = new window.kakao.maps.Roadview(container)
   const roadViewClient = new window.kakao.maps.RoadviewClient() //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
 
   const geocoder = new window.kakao.maps.services.Geocoder()
-  geocoder.addressSearch('경기도 성남시 분당구 쇳골로 22', function (result: any, status: any) {
+  geocoder.addressSearch(address, function (result: any, status: any) {
     if (status === window.kakao.maps.services.Status.OK) {
       var position = new window.kakao.maps.LatLng(result[0].y, result[0].x)
 

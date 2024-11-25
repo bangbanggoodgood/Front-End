@@ -39,11 +39,6 @@ export interface TUserSignUp {
   useId: string
 }
 
-// location
-export interface TLocationResponse {
-  name: string
-}
-
 // apartment
 export interface TApartment {
   aptSeq: string
