@@ -30,3 +30,13 @@ export const checkId = async (memberId: string): Promise<boolean> => {
     return false
   }
 }
+
+export const withdrawal = async (): Promise<boolean> => {
+  try {
+    await user.withdrawal()
+    return true
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}

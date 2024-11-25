@@ -12,3 +12,7 @@ export const getUser = async () => {
 export const checkId = async () => {
   return HttpResponse.json({ isValid: true })
 }
+
+export const withdrawal = async () => {
+  return HttpResponse.json()
+}

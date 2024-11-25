@@ -36,13 +36,11 @@
       </tr>
     </tbody>
   </table>
-  <!-- <survey-container v-if="survey" @close="survey = false" :is-edit="true" /> -->
 </template>
 
 <script setup lang="ts">
 import type { TUserInfo } from '@/model'
 import Button from '../ui/button/Button.vue'
-import { ref } from 'vue'
 import { userRole, userRoleToKr } from '@/lib/user'
 
 export interface MyInfoTableProps {
@@ -53,8 +51,6 @@ export interface MyInfoTableProps {
 const props = withDefaults(defineProps<MyInfoTableProps>(), {
   isMyInfo: true,
 })
-
-// const survey = ref(false)
 
 const changeAUth = () => {
   if (props.userInfo.role === userRole.admin) {
