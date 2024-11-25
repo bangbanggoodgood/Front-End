@@ -26,7 +26,7 @@ const keys = computed(() => Object.keys(props.data).filter((key) => key !== 'tot
 const labels = computed(() =>
   keys.value.map((key) => {
     if (props.type === 'infra') {
-      return infraToKr[key.toUpperCase() as TInfra]
+      return infraToKr[key as TInfra]
     }
     return sexToKrMapper[key]
   }),

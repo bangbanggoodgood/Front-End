@@ -3,6 +3,14 @@ import type { userRole } from '@/lib/user'
 import type { jobs } from '@/lib/job'
 import type { DefaultBodyType, PathParams, StrictRequest } from 'msw'
 
+// jwt
+export interface TJwt {
+  auth: TUserRole
+  memberId: number
+  sub: number
+  exp: number
+}
+
 // job, keyword, infra
 export type TJob = (typeof jobs)[number]
 
@@ -14,13 +22,21 @@ export interface TInfraInfo extends Record<TInfra, number> {}
 export type TUserRole = (typeof userRole)[keyof typeof userRole]
 export interface TUser {
   memberId: number
-  name: string
   role: TUserRole
 }
 export interface TUserInfo extends TUser {
+  useId: string
+  name: string
   birth: string
   sex: string
   job: TJob
+}
+export interface TUserSignUp {
+  name: string
+  birth: string
+  sex: string
+  job: string
+  useId: string
 }
 
 // location
@@ -139,4 +155,9 @@ export interface TAnalysis {
   sido: string
   gugun: string
   dong: string
+}
+
+// browserStorage
+export interface TStorage {
+  value: any
 }

@@ -1,26 +1,42 @@
-import type { TApartmentSearch, TPageRequest } from '@/model'
+import type { TApartmentSearch, TPageRequest, TUserSignUp } from '@/model'
 import axios from 'axios'
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
 
-const instance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: baseUrl,
   timeout: 5000,
 })
 
+export const user = {
+  signUp: async (info: TUserSignUp) => {
+    return axiosInstance.post('users/signUp', {
+      ...info,
+    })
+  },
+  getUser: async () => {
+    return axiosInstance.get(`/users`)
+  },
+  checkId: async (memberId: string) => {
+    return axiosInstance.post('/users/check', {
+      memberId,
+    })
+  },
+}
+
 export const location = {
   getSido: async () => {
-    return instance.get('/sido')
+    return axiosInstance.get('/sido')
   },
   getGugun: async (sido: string) => {
-    return instance.get('/gugun', {
+    return axiosInstance.get('/gugun', {
       params: {
         sido,
       },
     })
   },
   getDong: async (sido: string, gugun: string) => {
-    return instance.get('/dong', {
+    return axiosInstance.get('/dong', {
       params: {
         sido,
         gugun,
@@ -31,7 +47,7 @@ export const location = {
 
 export const apartment = {
   getApartments: async (query: TApartmentSearch) => {
-    return instance.get('/apartments', {
+    return axiosInstance.get('/apartments', {
       params: {
         ...query,
         targetMinPrice: Number(query.targetMinPrice),
@@ -40,14 +56,14 @@ export const apartment = {
     })
   },
   getAiIntroduce: async (aptSeq: string) => {
-    return instance.get(`/comments`, {
+    return axiosInstance.get(`/comments`, {
       params: {
         aptSeq,
       },
     })
   },
   getLikes: async (memberId: number, { limit, presentPage }: TPageRequest) => {
-    return instance.get(`/likes/${memberId}`, {
+    return axiosInstance.get(`/likes/${memberId}`, {
       params: {
         limit,
         presentPage,
@@ -55,13 +71,13 @@ export const apartment = {
     })
   },
   postLike: async (memberId: number, aptSeq: string) => {
-    return instance.post('/likes', {
+    return axiosInstance.post('/likes', {
       memberId,
       aptSeq,
     })
   },
   getDealGraph: async (aptSeq: string) => {
-    return instance.get('/deals/detailGraph', {
+    return axiosInstance.get('/deals/detailGraph', {
       params: {
         aptSeq,
         period: 5,
@@ -69,7 +85,7 @@ export const apartment = {
     })
   },
   getDealList: async (aptSeq: string, { presentPage, limit }: TPageRequest) => {
-    return instance.get('/deals/detailChart', {
+    return axiosInstance.get('/deals/detailChart', {
       params: {
         aptSeq,
         presentPage,
@@ -81,7 +97,7 @@ export const apartment = {
 
 export const aiChat = {
   postAiChat: async (question: string) => {
-    return instance.post('/questions', {
+    return axiosInstance.post('/questions', {
       data: {
         question,
       },

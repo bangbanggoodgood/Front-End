@@ -2,6 +2,10 @@
   <table class="border w-full bg-white">
     <tbody class="divide-y">
       <tr class="grid grid-cols-9 divide-x">
+        <td class="flex justify-center items-center py-3 bg-background col-span-2">아이디</td>
+        <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.useId }}</td>
+      </tr>
+      <tr class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">이름</td>
         <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.name }}</td>
       </tr>
@@ -17,7 +21,7 @@
         <td class="flex justify-center items-center py-3 bg-background col-span-2">직업</td>
         <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.job }}</td>
       </tr>
-      <tr v-if="isMyInfo" class="grid grid-cols-9 divide-x">
+      <tr v-if="!isMyInfo" class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">역할</td>
         <td class="flex items-center justify-between px-5 py-3 col-span-7">
           <div>{{ userRoleToKr[userInfo.role] }}</div>
@@ -32,7 +36,7 @@
       </tr>
     </tbody>
   </table>
-  <survey-container v-if="survey" @close="survey = false" :is-edit="true" />
+  <!-- <survey-container v-if="survey" @close="survey = false" :is-edit="true" /> -->
 </template>
 
 <script setup lang="ts">
@@ -50,7 +54,7 @@ const props = withDefaults(defineProps<MyInfoTableProps>(), {
   isMyInfo: true,
 })
 
-const survey = ref(false)
+// const survey = ref(false)
 
 const changeAUth = () => {
   if (props.userInfo.role === userRole.admin) {

@@ -179,6 +179,7 @@ export const dealChartMock: TDeal[] = generateDealMock()
 // user
 export const userMock: TUserInfo = {
   memberId: 1,
+  useId: 'junhakjh',
   name: '김준하',
   role: userRole.admin,
   birth: '99.06.12',
