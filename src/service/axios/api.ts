@@ -5,12 +5,12 @@ const baseUrl = import.meta.env.VITE_APP_BASE_URL
 
 export const axiosInstance = axios.create({
   baseURL: baseUrl,
-  timeout: 5000,
+  timeout: 10000,
 })
 
 export const user = {
   signUp: async (info: TUserSignUp) => {
-    return axiosInstance.post('users/signUp', {
+    return axiosInstance.post('/users/signUp', {
       ...info,
     })
   },
@@ -26,17 +26,17 @@ export const user = {
 
 export const location = {
   getSido: async () => {
-    return axiosInstance.get('/sido')
+    return axiosInstance.get('/info/sido')
   },
   getGugun: async (sido: string) => {
-    return axiosInstance.get('/gugun', {
+    return axiosInstance.get('/info/gugun', {
       params: {
         sido,
       },
     })
   },
   getDong: async (sido: string, gugun: string) => {
-    return axiosInstance.get('/dong', {
+    return axiosInstance.get('/info/dong', {
       params: {
         sido,
         gugun,
@@ -47,11 +47,35 @@ export const location = {
 
 export const apartment = {
   getApartments: async (query: TApartmentSearch) => {
-    return axiosInstance.get('/apartments', {
+    return axiosInstance.post(`/deals?presentPage=${query.presentPage}&limit=${query.limit}`, {
+      sidoName: query.sidoName,
+      gugunName: query.gugunName,
+      dongName: query.dongName,
+      aptName: query.aptName,
+      targetMinPrice: query.targetMinPrice,
+      targetMaxPrice: query.targetMaxPrice,
+      // params: {
+      //   presentPage: query.presentPage,
+      //   limit: query.limit
+      //   // targetMinPrice: Number(query.targetMinPrice),
+      //   // targetMaxPrice: Number(query.targetMaxPrice),
+      // },
+    })
+  },
+  getDealGraph: async (aptSeq: string) => {
+    return axiosInstance.get('/deals/detailGraph', {
       params: {
-        ...query,
-        targetMinPrice: Number(query.targetMinPrice),
-        targetMaxPrice: Number(query.targetMaxPrice),
+        aptSeq,
+        period: 5,
+      },
+    })
+  },
+  getDealList: async (aptSeq: string, { presentPage, limit }: TPageRequest) => {
+    return axiosInstance.get('/deals/detailChart', {
+      params: {
+        aptSeq,
+        presentPage,
+        limit,
       },
     })
   },
@@ -74,23 +98,6 @@ export const apartment = {
     return axiosInstance.post('/likes', {
       memberId,
       aptSeq,
-    })
-  },
-  getDealGraph: async (aptSeq: string) => {
-    return axiosInstance.get('/deals/detailGraph', {
-      params: {
-        aptSeq,
-        period: 5,
-      },
-    })
-  },
-  getDealList: async (aptSeq: string, { presentPage, limit }: TPageRequest) => {
-    return axiosInstance.get('/deals/detailChart', {
-      params: {
-        aptSeq,
-        presentPage,
-        limit,
-      },
     })
   },
 }

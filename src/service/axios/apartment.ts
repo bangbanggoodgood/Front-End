@@ -29,7 +29,7 @@ export const getAiIntroduces = async (
     const result: Record<string, string> = {}
     for (const aptSeq of aptSeqs) {
       const res = await apartment.getAiIntroduce(aptSeq)
-      result[aptSeq] = res.data.comment
+      result[aptSeq] = res.data.content
     }
     return result
   } catch (e) {
@@ -82,7 +82,7 @@ export const getDealList = async (
     const res = await apartment.getDealList(aptSeq, { presentPage, limit })
     return {
       totalRow: res.data.totalRow,
-      data: res.data.aptDto,
+      data: res.data.data,
     }
   } catch (e) {
     console.error(e)
