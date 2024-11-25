@@ -1,11 +1,11 @@
-import type { infraArray, infraArrayKr, keywords } from '@/lib/infra'
+import type { infraArray, infraArrayKr } from '@/lib/infra'
 import type { userRole } from '@/lib/user'
 import type { jobs } from '@/lib/job'
 import type { DefaultBodyType, PathParams, StrictRequest } from 'msw'
 
 // job, keyword, infra
 export type TJob = (typeof jobs)[number]
-export type TKeyword = (typeof keywords)[number]
+// export type TKeyword = (typeof keywords)[number]
 
 export type TInfra = (typeof infraArray)[number]
 export type TInfraKr = (typeof infraArrayKr)[number]
@@ -23,7 +23,7 @@ export interface TUserInfo extends TUser {
   birth: string
   sex: string
   job: TJob
-  categories: TKeyword[]
+  // categories: TKeyword[]
 }
 export interface TUserSignUp {
   name: string

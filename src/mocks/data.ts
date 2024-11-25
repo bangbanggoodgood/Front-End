@@ -184,7 +184,7 @@ export const userMock: TUserInfo = {
   birth: '99.06.12',
   sex: '남성',
   job: 'IT개발/데이터',
-  categories: ['가격', '마트/편의점', '카페', '음식점'],
+  // categories: ['가격', '마트/편의점', '카페', '음식점'],
 }
 
 // stat
