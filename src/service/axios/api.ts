@@ -5,7 +5,7 @@ const baseUrl = import.meta.env.VITE_APP_BASE_URL
 
 export const axiosInstance = axios.create({
   baseURL: baseUrl,
-  timeout: 10000,
+  timeout: 15000,
 })
 
 export const user = {
