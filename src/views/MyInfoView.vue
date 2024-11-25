@@ -31,10 +31,4 @@ onMounted(async () => {
     userInfo.value = data
   }
 })
-onUpdated(async () => {
-  const data = await getUser()
-  if (data) {
-    userInfo.value = data
-  }
-})
 </script>

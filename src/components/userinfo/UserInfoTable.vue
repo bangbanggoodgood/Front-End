@@ -21,14 +21,14 @@
         <td class="flex justify-center items-center py-3 bg-background col-span-2">직업</td>
         <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.job }}</td>
       </tr>
-      <tr v-if="isMyInfo" class="grid grid-cols-9 divide-x">
+      <!-- <tr v-if="isMyInfo" class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">관심 키워드</td>
         <td class="flex items-center justify-between px-5 py-3 col-span-7">
           <div>{{ userInfo.categories.join(', ') }}</div>
           <Button class="border" @click="survey = true">수정하기</Button>
         </td>
-      </tr>
-      <tr v-else class="grid grid-cols-9 divide-x">
+      </tr> -->
+      <tr v-if="!isMyInfo" class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">역할</td>
         <td class="flex items-center justify-between px-5 py-3 col-span-7">
           <div>{{ userRoleToKr[userInfo.role] }}</div>
@@ -43,7 +43,7 @@
       </tr>
     </tbody>
   </table>
-  <survey-container v-if="survey" @close="survey = false" :is-edit="true" />
+  <!-- <survey-container v-if="survey" @close="survey = false" :is-edit="true" /> -->
 </template>
 
 <script setup lang="ts">
@@ -62,7 +62,7 @@ const props = withDefaults(defineProps<MyInfoTableProps>(), {
   isMyInfo: true,
 })
 
-const survey = ref(false)
+// const survey = ref(false)
 
 const changeAUth = () => {
   if (props.userInfo.role === userRole.admin) {

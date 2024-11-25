@@ -3,17 +3,17 @@
   <main v-if="showMain" class="flex-1 flex flex-col">
     <router-view />
   </main>
-  <survey-container v-if="!didSurvey" @close="didSurvey = true" />
+  <!-- <survey-container v-if="!didSurvey" @close="didSurvey = true" /> -->
 </template>
 <script setup lang="ts">
 import HeaderBar from '@/components/layout/Header.vue'
 import { onMounted, ref, watch } from 'vue'
 import { RouterView, useRoute, useRouter } from 'vue-router'
-import SurveyContainer from './components/survey/SurveyContainer.vue'
+// import SurveyContainer from './components/survey/SurveyContainer.vue'
 import { sessionStorage } from './util/browserStorage'
 import { insertToken } from './service/axios/api'
 
-const didSurvey = ref(true)
+// const didSurvey = ref(true)
 const showMain = ref(false)
 
 const route = useRoute()
