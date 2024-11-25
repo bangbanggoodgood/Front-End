@@ -60,6 +60,9 @@ const sendChat = async () => {
     alert('잠시 후 다시 시도해주세요.')
     return
   }
-  chats.value.push(answer)
+  chats.value.push({
+    isAi: true,
+    message: answer,
+  })
 }
 </script>
