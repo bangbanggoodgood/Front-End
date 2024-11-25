@@ -22,6 +22,9 @@ export const user = {
       memberId,
     })
   },
+  withdrawal: async () => {
+    return axiosInstance.delete('/users')
+  },
 }
 
 export const location = {
