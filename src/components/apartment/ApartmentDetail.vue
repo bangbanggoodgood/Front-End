@@ -147,13 +147,7 @@ watch(
       const time = (nextTime - prevTime) / 1000
       sendAnalysis({
         time,
-        keywords: [],
-        avgPrice: (nv.minDealAmount + nv.maxDealAmount) / 2,
-        minPrice: nv.minDealAmount,
-        maxPrice: nv.maxDealAmount,
-        sido: '',
-        gugun: '',
-        dong: '',
+        aptSeq: nv.aptSeq,
       })
       prevTime = nextTime
     }
@@ -169,13 +163,7 @@ const handleVisibilityChange = () => {
     const time = (nextTime - prevTime) / 1000
     sendAnalysis({
       time,
-      keywords: [],
-      avgPrice: (props.apartment.minDealAmount + props.apartment.maxDealAmount) / 2,
-      minPrice: props.apartment.minDealAmount,
-      maxPrice: props.apartment.maxDealAmount,
-      sido: '',
-      gugun: '',
-      dong: '',
+      aptSeq: props.apartment.aptSeq,
     })
   } else {
     prevTime = Date.now()
