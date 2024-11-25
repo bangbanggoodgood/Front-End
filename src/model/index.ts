@@ -143,13 +143,7 @@ export interface TMapStore {
 // analysis
 export interface TAnalysis {
   time: number
-  keywords: string[]
-  avgPrice: number
-  minPrice: number
-  maxPrice: number
-  sido: string
-  gugun: string
-  dong: string
+  aptSeq: string
 }
 
 // browserStorage
