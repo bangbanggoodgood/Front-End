@@ -3,13 +3,11 @@
   <main class="flex-1 flex flex-col">
     <router-view />
   </main>
-  <survey-container v-if="!didSurvey" @close="didSurvey = true" />
 </template>
 <script setup lang="ts">
 import HeaderBar from '@/components/layout/Header.vue'
 import { onMounted, ref } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
-import SurveyContainer from './components/survey/SurveyContainer.vue'
 import { sessionStorage } from './util/browserStorage'
 
 const didSurvey = ref(true)

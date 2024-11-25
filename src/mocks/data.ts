@@ -111,6 +111,7 @@ const generateApartmentsMock = (limit: number): TApartment[] => {
       maxArea: 216.93,
       address: addressMock[i % addressMock.length],
       infra,
+      tags: ['고양이와눈싸움', '잔잔한행복', '느림의미학'],
       minDealAmount: 375000000,
       maxDealAmount: 412000000,
       like: 1,
@@ -183,7 +184,6 @@ export const userMock: TUserInfo = {
   birth: '99.06.12',
   sex: '남성',
   job: 'IT개발/데이터',
-  categories: ['가격', '마트/편의점', '카페', '음식점'],
 }
 
 // stat
