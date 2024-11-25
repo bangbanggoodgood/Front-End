@@ -15,7 +15,7 @@
     <apartment-info-table :apartment="apartment" />
     <h2 class="text-lg mt-3">로드뷰</h2>
     <div class="w-full h-80">
-      <road-view />
+      <road-view :address="apartment.address" />
     </div>
     <h2 class="text-lg mt-3">평균 거래가</h2>
     <div class="flex border divide-x text-sm">
