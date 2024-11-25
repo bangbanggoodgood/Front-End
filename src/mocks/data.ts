@@ -104,8 +104,8 @@ const generateApartmentsMock = (limit: number): TApartment[] => {
       address: addressMock[i % addressMock.length],
       infra,
       tags: ['고양이와눈싸움', '잔잔한행복', '느림의미학'],
-      minDealAmount: 375000000,
-      maxDealAmount: 412000000,
+      minDealAmount: 37500,
+      maxDealAmount: 41200,
       like: 1,
     })
   }
