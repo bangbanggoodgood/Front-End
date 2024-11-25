@@ -18,8 +18,8 @@
         {{ numberToKrMoney(apartment.maxDealAmount) }} 원
       </div>
       <ul class="flex flex-wrap gap-2">
-        <li v-for="keyword in getKeywords(apartment.infra)" :key="keyword">
-          <keyword-box :keyword="keyword" />
+        <li v-for="tag in apartment.tags" :key="tag">
+          <keyword-box :keyword="tag" />
         </li>
       </ul>
     </div>
@@ -41,7 +41,6 @@ import { numberToKrMoney } from '@/util/money'
 import AiComment from '../ai/AiComment.vue'
 import { ref } from 'vue'
 import KeywordBox from '../ui/KeywordBox.vue'
-import { getKeywords } from '@/util/apartment'
 
 interface Props {
   apartment: TApartment
