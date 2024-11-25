@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="text-lg text-white flex items-center gap-4">
-      <template v-if="user.name">
+      <template v-if="user.memberId >= 0">
         <router-link v-if="user.role === userRole.admin" :to="{ name: 'admin' }"
           >관리자 페이지</router-link
         >
@@ -38,7 +38,7 @@ import { useUserStore } from '@/stores/user'
 import UserIcon from '../ui/icons/UserIcon.vue'
 import DropDownList from '../ui/DropDownList.vue'
 import router from '@/router'
-import { onBeforeUnmount, onMounted, onUpdated, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { userRole } from '@/lib/user'
 import AiChat from '../ai/AiChat.vue'
 
@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
 
 const login = () => {
   alert('login')
-  user.login({ memberId: 1, name: 'junhakjh', role: userRole.admin })
+  user.login({ memberId: 1, role: userRole.admin })
 }
 
 const toggleDropdown = () => {

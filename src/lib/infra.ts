@@ -1,19 +1,8 @@
-// - 학교 (**"schools"**)
-// - 학원 (**”academy”**)
-// - 병원 / 약국 (**”healthCare”**)
-// - 마트 / 편의점 (**”convinience”**)
-// - 음식점 ( 전체 합쳐서 ) (**”restaurant”**)
-// - 카페 (**”cafe”**)
-// - 술집 (**”pubs”**)
-// - 여가 활동 ( 스포츠랑 유원지 합쳐서) (**”leisure”**)
-// - 버스 (**”bus”**)
-// - 지하철 (**”subway”**)
-// - 동물 병원 (**”petHospital”**)
 export const SCHOOLS = 'schools'
 export const ACADEMY = 'academy'
 export const HEALTHCARE = 'healthCare'
 export const CONVINIENCE = 'convinience'
-export const RESTAURANT = '”restaurant”'
+export const RESTAURANT = 'restaurant'
 export const CAFE = 'cafe'
 export const PUBS = 'pubs'
 export const LEISURE = 'leisure'
