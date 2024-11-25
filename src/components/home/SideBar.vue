@@ -174,7 +174,7 @@ const gugunClick = async (gugun: string) => {
   selectedDong.value = '읍/면/동'
   const data = await getDong(selectedSido.value, gugun)
   if (data) {
-    dongList.value = data
+    dongList.value = ['전체', ...data]
   } else {
     alert('읍/면/동 정보를 가져오는데 실패했습니다.')
   }
