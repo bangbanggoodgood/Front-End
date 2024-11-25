@@ -21,13 +21,6 @@
         <td class="flex justify-center items-center py-3 bg-background col-span-2">직업</td>
         <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.job }}</td>
       </tr>
-      <!-- <tr v-if="isMyInfo" class="grid grid-cols-9 divide-x">
-        <td class="flex justify-center items-center py-3 bg-background col-span-2">관심 키워드</td>
-        <td class="flex items-center justify-between px-5 py-3 col-span-7">
-          <div>{{ userInfo.categories.join(', ') }}</div>
-          <Button class="border" @click="survey = true">수정하기</Button>
-        </td>
-      </tr> -->
       <tr v-if="!isMyInfo" class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">역할</td>
         <td class="flex items-center justify-between px-5 py-3 col-span-7">
@@ -50,7 +43,6 @@
 import type { TUserInfo } from '@/model'
 import Button from '../ui/button/Button.vue'
 import { ref } from 'vue'
-import SurveyContainer from '@/components/survey/SurveyContainer.vue'
 import { userRole, userRoleToKr } from '@/lib/user'
 
 export interface MyInfoTableProps {

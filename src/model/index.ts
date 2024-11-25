@@ -5,7 +5,6 @@ import type { DefaultBodyType, PathParams, StrictRequest } from 'msw'
 
 // job, keyword, infra
 export type TJob = (typeof jobs)[number]
-// export type TKeyword = (typeof keywords)[number]
 
 export type TInfra = (typeof infraArray)[number]
 export type TInfraKr = (typeof infraArrayKr)[number]
@@ -23,7 +22,6 @@ export interface TUserInfo extends TUser {
   birth: string
   sex: string
   job: TJob
-  // categories: TKeyword[]
 }
 export interface TUserSignUp {
   name: string
@@ -47,6 +45,7 @@ export interface TApartment {
   maxArea: number
   address: string
   infra: TInfraInfo
+  tags: string[]
   minDealAmount: number
   maxDealAmount: number
   like: 0 | 1
