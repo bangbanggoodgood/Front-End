@@ -14,8 +14,8 @@ export const getApartments = async (
     }
     const res = await apartment.getApartments(query)
     res.data.aptDto = res.data.aptDto.map((apt: TApartment) => {
-      if (apt.tags.length > 3) {
-        apt.tags = take(shuffle(apt.tags), 3).sort()
+      if (apt.hashtags.length > 3) {
+        apt.hashtags = take(shuffle(apt.hashtags), 3).sort()
       }
       return apt
     })

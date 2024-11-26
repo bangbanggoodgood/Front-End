@@ -90,7 +90,7 @@ export const apartment = {
     })
   },
   getLikes: async (memberId: number, { limit, presentPage }: TPageRequest) => {
-    return axiosInstance.get(`/likes/${memberId}`, {
+    return axiosInstance.get(`/likes`, {
       params: {
         limit,
         presentPage,
@@ -108,9 +108,7 @@ export const apartment = {
 export const aiChat = {
   postAiChat: async (question: string) => {
     return axiosInstance.post('/questions', {
-      data: {
-        question,
-      },
+      question,
     })
   },
 }

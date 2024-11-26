@@ -29,6 +29,7 @@ onMounted(() => {
       sessionStorage.setItem('access_token', route.query.accessToken)
       router.replace({ query: {} })
     }
+    window.location.href = import.meta.env.VITE_APP_KAKAO_AUTH_URL
     showMain.value = true
   }
 })

@@ -18,7 +18,7 @@
         {{ numberToKrMoney(apartment.maxDealAmount) }} 원
       </div>
       <ul class="flex flex-wrap gap-2">
-        <li v-for="tag in apartment.tags" :key="tag">
+        <li v-for="tag in apartment.hashtags" :key="tag">
           <keyword-box :keyword="tag" />
         </li>
       </ul>

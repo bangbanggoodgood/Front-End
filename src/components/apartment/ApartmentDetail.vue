@@ -136,6 +136,12 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  const nextTime = Date.now()
+  const time = (nextTime - prevTime) / 1000
+  sendAnalysis({
+    time,
+    aptSeq: props.apartment.aptSeq,
+  })
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 

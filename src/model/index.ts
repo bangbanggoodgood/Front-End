@@ -48,7 +48,7 @@ export interface TApartment {
   maxArea: number
   address: string
   infra: TInfraInfo
-  tags: string[]
+  hashtags: string[]
   minDealAmount: number
   maxDealAmount: number
   like: 0 | 1
