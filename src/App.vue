@@ -20,23 +20,25 @@ const router = useRouter()
 const userStore = useUserStore()
 
 onMounted(() => {
-  const token = sessionStorage.getItem('access_token')
-  if (token) {
-    insertToken(token.value, userStore)
-    showMain.value = true
+  setTimeout(() => {
+    const token = sessionStorage.getItem('access_token')
+    if (token) {
+      insertToken(token.value, userStore)
+      router.replace({ path: route.path, query: {} })
 
-    // router.replace('')
-    // router.replace({ path: route.path, query: {} })
-  } else {
-    if (route.query.accessToken) {
-      sessionStorage.setItem('access_token', route.query.accessToken)
-
-      // router.replace({ path: route.path, query: {} })
+      // router.replace('')
       showMain.value = true
     } else {
-      window.location.href = import.meta.env.VITE_APP_KAKAO_AUTH_URL
+      if (route.query.accessToken) {
+        sessionStorage.setItem('access_token', route.query.accessToken)
+
+        // router.replace({ path: route.path, query: {} })
+        showMain.value = true
+      } else {
+        window.location.href = import.meta.env.VITE_APP_KAKAO_AUTH_URL
+      }
     }
-  }
+  }, 500)
 })
 
 watch(

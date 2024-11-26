@@ -40,7 +40,7 @@
             <hr class="flex-grow" />
           </div>
           <detail-search v-if="isDetailSearch" />
-          <Button class="self-end" variant="outline" @click="search()">검색</Button>
+          <Button class="self-end" variant="outline" @click="searchClick">검색</Button>
         </section>
       </section>
       <div class="grow w-[24rem] flex flex-col gap-2">
@@ -98,7 +98,7 @@ import ApartmentCard from '@/components/apartment/ApartmentCard.vue'
 import ApartmentDetail from '@/components/apartment/ApartmentDetail.vue'
 import OffsetPagination from '../ui/pagination/OffsetPagination.vue'
 import type { TApartment } from '@/model'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { getDong, getGugun, getSido } from '@/service/axios/location'
 import { getAiIntroduces, getApartments, getLikes } from '@/service/axios/apartment'
 import { moveScrollTo } from '@/util/scroll'
@@ -136,6 +136,7 @@ const resultTitleRef = ref<HTMLElement | null>(null)
 const isLoading = ref(false)
 
 const route = useRoute()
+const router = useRouter()
 const { memberId } = useUserStore()
 const map = useMapStore()
 
@@ -149,7 +150,8 @@ onMounted(async () => {
     if (data) {
       sidoList.value = data
     } else {
-      alert('시/도 정보를 가져오는데 실패했습니다.')
+      // router.replace({ query: {} })
+      // router.replace('/')
     }
   } else {
     timeoutId = setTimeout(() => {
@@ -197,8 +199,13 @@ const eubmyundongClick = (item: string) => {
   selectedDong.value = item
 }
 
+const searchClick = () => {
+  curPage.value = 1
+  search(1)
+}
+
 const search = async (page: number = 1) => {
-  isLoading.value = true
+  isLoading.value = false
   if (isHome.value) {
     if (
       (targetMinPrice.value && !isNaturalNumber(targetMinPrice.value, true)) ||
@@ -210,12 +217,13 @@ const search = async (page: number = 1) => {
     if (
       targetMinPrice.value &&
       targetMaxPrice.value &&
-      targetMinPrice.value > targetMaxPrice.value
+      Number(targetMinPrice.value) > Number(targetMaxPrice.value)
     ) {
       alert('최소 가격은 최대 가격보다 작거나 같게 입력해주세요.')
       return
     }
   }
+  isLoading.value = true
 
   const data = await (isHome.value
     ? getApartments({
@@ -237,11 +245,11 @@ const search = async (page: number = 1) => {
   if (data) {
     apartments.value = data.data
     totalResult.value = data.totalRow
+    searchPlaces(data.data, map, handleApartmentClick)
     const introduceData = await getAiIntroduces(data.data.map((item) => item.aptSeq))
     if (introduceData) {
       aiIntroduces.value = introduceData
     }
-    searchPlaces(data.data, map, handleApartmentClick)
     moveScrollTo(resultTitleRef.value, 'start')
   } else {
     alert('검색 결과를 가져오는데 실패했습니다.')

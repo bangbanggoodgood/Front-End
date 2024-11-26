@@ -15,7 +15,7 @@
       </tr>
       <tr class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">성별</td>
-        <td class="flex items-center px-5 py-3 col-span-7">{{ userInfo.sex }}</td>
+        <td class="flex items-center px-5 py-3 col-span-7">{{ sexToKrMapper[userInfo.sex] }}</td>
       </tr>
       <tr class="grid grid-cols-9 divide-x">
         <td class="flex justify-center items-center py-3 bg-background col-span-2">직업</td>
@@ -29,7 +29,7 @@
             class="py-1"
             :variant="userInfo.role === userRole.admin ? 'default' : 'filled'"
             @click="changeAUth"
-            >권한
+          >
             {{ userInfo.role === userRole.admin ? '관리자 권한 해제' : '관리자 권한 부여' }}</Button
           >
         </td>
@@ -42,6 +42,7 @@
 import type { TUserInfo } from '@/model'
 import Button from '../ui/button/Button.vue'
 import { userRole, userRoleToKr } from '@/lib/user'
+import { sexToKrMapper } from '@/lib/stat'
 
 export interface MyInfoTableProps {
   userInfo: TUserInfo

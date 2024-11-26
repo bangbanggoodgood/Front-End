@@ -85,8 +85,8 @@ export const searchPlaces = (
         })
         window.kakao.maps.event.addListener(marker, 'click', () => {
           handleApartmentClick(apartment)
-          mapStore.map.panTo(new window.kakao.maps.LatLng(coord.getLat(), coord.getLng() - 0.002))
-          mapStore.map.setLevel(3)
+          // mapStore.map.setLevel(3)
+          // mapStore.map.panTo(new window.kakao.maps.LatLng(coord.getLat(), coord.getLng() - 0.0028))
         })
         // var position = new window.kakao.maps.LatLng(coord.getLat() + 0.00105, coord.getLng())
         var overlay: any = null
