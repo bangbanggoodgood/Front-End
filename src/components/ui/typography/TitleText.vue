@@ -1,5 +1,7 @@
 <template>
-  <div>즐겨찾기</div>
+  <h1 class="text-2xl mt-10 mb-3">
+    <slot />
+  </h1>
 </template>
 
 <script setup lang="ts"></script>

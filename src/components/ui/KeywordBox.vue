@@ -1,6 +1,8 @@
 <template>
-  <span class="rounded-full bg-primary text-white text-sm px-3.5 py-1.5">
-    {{ keyword }}
+  <span class="text-sm mx-1">
+    <span class="text-primary">#</span>
+    {{ ' ' }}
+    <span class="text-text">{{ keyword }}</span>
   </span>
 </template>
 

@@ -3,7 +3,7 @@
     class="absolute top-10 left-0 text-center w-full max-h-48 overflow-auto divide-y border bg-white"
   >
     <li
-      class="py-1 px-2 hover:bg-background"
+      class="py-1 px-4 hover:bg-background"
       v-for="item in list"
       :id="item"
       @click="onClick(item)"

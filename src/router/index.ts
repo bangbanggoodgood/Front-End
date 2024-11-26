@@ -19,9 +19,14 @@ const router = createRouter({
       component: () => import('@/views/MyInfoView.vue'),
     },
     {
-      path: '/favorite',
-      name: 'favorite',
-      component: () => import('@/views/FavoriteView.vue'),
+      path: '/like',
+      name: 'like',
+      component: () => import('@/views/LikeView.vue'),
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: () => import('@/views/AdminView.vue'),
     },
     {
       path: '/didimdol',

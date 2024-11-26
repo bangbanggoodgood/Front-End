@@ -2,9 +2,9 @@
   <section class="flex flex-col gap-2">
     <div>
       <div class="flex justify-between items-center w-full">
-        <Input class="text-right" :model-value="min" placeholder="최소" />
+        <Input class="text-right" v-model="targetMinPrice" placeholder="최소" />
         <span class="mx-4"> ~ </span>
-        <Input class="text-right" :model-value="max" placeholder="최대" />
+        <Input class="text-right" v-model="targetMaxPrice" placeholder="최대" />
       </div>
       <p class="text-right text-xs text-text mt-1">(단위: 만 원)</p>
     </div>
@@ -24,11 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { inject, type Ref } from 'vue'
 import { Input } from '../ui/input'
 import { Search } from 'lucide-vue-next'
 
-const min = ref(null)
-const max = ref(null)
-const searchWord = ref('')
+const targetMinPrice = inject<Ref<string>>('targetMinPrice')
+const targetMaxPrice = inject<Ref<string>>('targetMaxPrice')
+const searchWord = inject<Ref<string>>('searchWord')
 </script>

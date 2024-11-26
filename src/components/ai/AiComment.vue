@@ -12,9 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import type { TApartment } from '@/model'
-
-export interface AiCommentProps extends Pick<TApartment, 'introduce'> {
+export interface AiCommentProps {
+  introduce: string
   type: 'preview' | 'detail'
 }
 defineProps<AiCommentProps>()
