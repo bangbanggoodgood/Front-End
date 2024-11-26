@@ -1,4 +1,4 @@
-import type { TApartmentSearch, TPageRequest, TUserSignUp } from '@/model'
+import type { TApartmentSearch, TPageRequest, TStat, TUserSignUp } from '@/model'
 import axios from 'axios'
 
 const baseUrl = import.meta.env.VITE_APP_BASE_URL
@@ -111,6 +111,26 @@ export const aiChat = {
       data: {
         question,
       },
+    })
+  },
+}
+
+export const admin = {
+  getStats: async (kind: TStat) => {
+    return axiosInstance.get('/admin/statics', {
+      params: {
+        kind,
+      },
+    })
+  },
+  getUserList: async (useId: string) => {
+    return axiosInstance.post('/admin/userList', {
+      useId,
+    })
+  },
+  changeAuth: async (useId: string) => {
+    return axiosInstance.post('/admin/authority', {
+      useId,
     })
   },
 }

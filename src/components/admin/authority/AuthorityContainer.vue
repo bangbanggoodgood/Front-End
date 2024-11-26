@@ -18,8 +18,13 @@
           <Search class="size-6 text-primary" />
         </span>
       </form>
-      <user-info-table :user-info="userMock" :is-my-info="false" />
-      <button @click="modal = false">
+      <user-info-table
+        v-if="userInfo.useId !== ''"
+        :user-info="userInfo"
+        :is-my-info="false"
+        @change-auth="changeAuthClick"
+      />
+      <button @click="closeModal">
         <close-icon class="absolute right-4 top-4" />
       </button>
     </div>
@@ -33,13 +38,50 @@ import { ref } from 'vue'
 import Input from '@/components/ui/input/Input.vue'
 import { Search } from 'lucide-vue-next'
 import UserInfoTable from '@/components/userinfo/UserInfoTable.vue'
-import { userMock } from '@/mocks/data'
 import CloseIcon from '@/components/ui/icons/CloseIcon.vue'
+import type { TUserInfo } from '@/model'
+import { userRole } from '@/lib/user'
+import { jobs } from '@/lib/job'
+import { changeAuth, getUserList } from '@/service/axios/admin'
 
 const modal = ref<boolean>(false)
 const searchWord = ref<string>('')
+const userInfo = ref<TUserInfo>({
+  useId: '',
+  name: '',
+  birth: '',
+  sex: '',
+  job: jobs[0],
+  memberId: -1,
+  role: userRole.user,
+})
 
-const search = () => {
-  alert('hi')
+const search = async () => {
+  const res = await getUserList(searchWord.value)
+  if (res) {
+    userInfo.value = res
+  }
+}
+
+const changeAuthClick = async () => {
+  const res = await changeAuth(userInfo.value.useId)
+  if (res) {
+    alert('권한을 변경하였습니다.')
+    search()
+  }
+}
+
+const closeModal = () => {
+  modal.value = false
+  searchWord.value = ''
+  userInfo.value = {
+    useId: '',
+    name: '',
+    birth: '',
+    sex: '',
+    job: jobs[0],
+    memberId: -1,
+    role: userRole.user,
+  }
 }
 </script>

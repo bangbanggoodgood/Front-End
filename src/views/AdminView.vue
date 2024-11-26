@@ -3,7 +3,7 @@
     <section>
       <stat-container />
     </section>
-    <section>
+    <section class="mb-10">
       <authority-container />
     </section>
   </div>
