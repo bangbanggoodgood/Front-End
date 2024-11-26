@@ -92,7 +92,8 @@ import { formattedDate, validateBirthDate } from '@/util/date'
 import { jobs } from '@/lib/job'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { checkId, signUp } from '@/service/axios/user'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { sessionStorage } from '@/util/browserStorage'
 
 const useId = ref('')
 const name = ref('')
@@ -103,6 +104,7 @@ const job = ref('')
 const jobInputRef = ref<any>(null)
 
 const validateIdResult = ref(false)
+
 const router = useRouter()
 
 const handleOutsideClick = (event: MouseEvent) => {
@@ -116,6 +118,10 @@ const handleOutsideClick = (event: MouseEvent) => {
 
 onMounted(() => {
   document.addEventListener('click', handleOutsideClick)
+  // if (route.query.accessToken) {
+  //   sessionStorage.setItem('access_token', route.query.accessToken)
+  //   router.replace({ path: "", query: {} })
+  // }
 })
 
 onBeforeUnmount(() => {

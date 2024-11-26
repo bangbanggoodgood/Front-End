@@ -85,13 +85,14 @@ export const searchPlaces = (
         })
         window.kakao.maps.event.addListener(marker, 'click', () => {
           handleApartmentClick(apartment)
-          mapStore.map.panTo(new window.kakao.maps.LatLng(coord.getLat(), coord.getLng() - 0.0028))
+          mapStore.map.panTo(new window.kakao.maps.LatLng(coord.getLat(), coord.getLng() - 0.002))
+          mapStore.map.setLevel(3)
         })
-        var position = new window.kakao.maps.LatLng(coord.getLat() + 0.00105, coord.getLng())
+        // var position = new window.kakao.maps.LatLng(coord.getLat() + 0.00105, coord.getLng())
         var overlay: any = null
         window.kakao.maps.event.addListener(marker, 'mouseover', () => {
           overlay = new window.kakao.maps.CustomOverlay({
-            position,
+            position: coord,
             content: `<div class="px-2 py-1 text-sm bg-white rounded-md shadow-md border">${apartment.aptNm}</div>`,
           })
           overlay.setMap(mapStore.map)

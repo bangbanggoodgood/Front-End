@@ -59,7 +59,7 @@
           </template>
           <template v-else>
             <div class="flex justify-center items-center h-full">
-              <VueSpinner size="20" class="text-primary" />
+              <VueSpinner size="44" class="text-primary" />
             </div>
           </template>
         </ul>
@@ -233,6 +233,7 @@ const search = async (page: number = 1) => {
         limit: APARTMENT_LIMIT_PAGE,
       }))
 
+  isLoading.value = false
   if (data) {
     apartments.value = data.data
     totalResult.value = data.totalRow
@@ -241,7 +242,6 @@ const search = async (page: number = 1) => {
       aiIntroduces.value = introduceData
     }
     searchPlaces(data.data, map, handleApartmentClick)
-    isLoading.value = false
     moveScrollTo(resultTitleRef.value, 'start')
   } else {
     alert('검색 결과를 가져오는데 실패했습니다.')

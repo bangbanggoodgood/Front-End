@@ -24,33 +24,44 @@ onMounted(() => {
   if (token) {
     insertToken(token.value, userStore)
     showMain.value = true
-    router.replace({ query: {} })
+
+    // router.replace('')
+    // router.replace({ path: route.path, query: {} })
   } else {
     if (route.query.accessToken) {
       sessionStorage.setItem('access_token', route.query.accessToken)
-      router.replace({ query: {} })
+
+      // router.replace({ path: route.path, query: {} })
+      showMain.value = true
+    } else {
+      window.location.href = import.meta.env.VITE_APP_KAKAO_AUTH_URL
     }
-    window.location.href = import.meta.env.VITE_APP_KAKAO_AUTH_URL
-    showMain.value = true
   }
 })
 
 watch(
-  () => route.query,
+  () => route,
   (nv) => {
     const token = sessionStorage.getItem('access_token')
     if (token) {
       insertToken(token.value, userStore)
       showMain.value = true
+      // console.log(nv.path)
+
+      // router.replace({ path: route.path, query: {} })
     } else {
-      if (nv.accessToken) {
-        sessionStorage.setItem('access_token', nv.accessToken)
-        router.replace({ query: {} })
+      if (nv.query.accessToken) {
+        sessionStorage.setItem('access_token', nv.query.accessToken)
+        // console.log(route.path)
+
+        // router.replace({ path: route.path, query: {} })
+        showMain.value = true
+      } else {
+        window.location.href = import.meta.env.VITE_APP_KAKAO_AUTH_URL
       }
-      showMain.value = true
     }
   },
-  { immediate: true },
+  { deep: true, immediate: true },
 )
 </script>
 <style scoped>

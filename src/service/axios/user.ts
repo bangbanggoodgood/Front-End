@@ -24,7 +24,7 @@ export const getUser = async (): Promise<TUserInfo | false> => {
 export const checkId = async (memberId: string): Promise<boolean> => {
   try {
     const res = await user.checkId(memberId)
-    return res.data.isValid
+    return res.data.valid
   } catch (e) {
     console.error(e)
     return false

@@ -17,9 +17,9 @@ export const user = {
   getUser: async () => {
     return axiosInstance.get(`/users`)
   },
-  checkId: async (memberId: string) => {
+  checkId: async (useId: string) => {
     return axiosInstance.post('/users/check', {
-      memberId,
+      useId,
     })
   },
   withdrawal: async () => {

@@ -1,1 +1,1 @@
-export const APARTMENT_LIMIT_PAGE = 7
+export const APARTMENT_LIMIT_PAGE = 5

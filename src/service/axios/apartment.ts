@@ -51,6 +51,12 @@ export const getLikes = async (
 ): Promise<TPageResponse<TApartment> | false> => {
   try {
     const res = await apartment.getLikes(memberId, { presentPage, limit })
+    res.data.aptDto = res.data.aptDto.map((apt: TApartment) => {
+      if (apt.hashtags.length > 3) {
+        apt.hashtags = take(shuffle(apt.hashtags), 3).sort()
+      }
+      return apt
+    })
     return {
       totalRow: res.data.totalRow,
       data: res.data.aptDto,
