@@ -103,7 +103,7 @@ const generateApartmentsMock = (limit: number): TApartment[] => {
       maxArea: 216.93,
       address: addressMock[i % addressMock.length],
       infra,
-      tags: ['고양이와눈싸움', '잔잔한행복', '느림의미학', '오늘의 오늘', '내일의 내일'],
+      hashtags: ['고양이와눈싸움', '잔잔한행복', '느림의미학', '오늘의 오늘', '내일의 내일'],
       minDealAmount: 37500,
       maxDealAmount: 41200,
       like: 1,

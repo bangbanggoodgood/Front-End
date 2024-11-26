@@ -217,7 +217,7 @@ const search = async (page: number = 1) => {
     }
   }
 
-  const data = await (isHome
+  const data = await (isHome.value
     ? getApartments({
         sidoName: selectedSido.value,
         gugunName: selectedGugun.value,

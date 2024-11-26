@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute flex flex-col divide-y rounded-lg bg-background shadow-lg w-72 h-[26rem] z-30"
+    class="absolute flex flex-col divide-y rounded-lg bg-background shadow-lg w-72 h-[26rem] z-30 border border-gray-300"
   >
     <div class="py-2">
       <section ref="scrollArea" class="flex flex-col gap-2 h-[22rem] overflow-y-auto px-3">
@@ -53,8 +53,8 @@ const sendChat = async () => {
     isAi: false,
     message: message.value.trim(),
   })
-  message.value = ''
   const answer = await postAiChat(message.value.trim())
+  message.value = ''
   isSending.value = false
   if (!answer) {
     alert('잠시 후 다시 시도해주세요.')
