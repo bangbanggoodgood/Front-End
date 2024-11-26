@@ -43,18 +43,25 @@
           <Button class="self-end" variant="outline" @click="search()">검색</Button>
         </section>
       </section>
-      <div class="w-[24rem] flex flex-col gap-2">
+      <div class="grow w-[24rem] flex flex-col gap-2">
         <h2 class="text-xl" ref="resultTitleRef">
           {{ isHome ? '검색 결과' : '즐겨찾기' }} ({{ totalResult }})
         </h2>
-        <ul class="flex flex-col gap-5">
-          <li
-            v-for="apartment in apartments"
-            :key="apartment.aptSeq"
-            @click="handleApartmentClick(apartment)"
-          >
-            <apartment-card :apartment="apartment" :introduce="aiIntroduces[apartment.aptSeq]" />
-          </li>
+        <ul class="grow flex flex-col gap-5">
+          <template v-if="!isLoading">
+            <li
+              v-for="apartment in apartments"
+              :key="apartment.aptSeq"
+              @click="handleApartmentClick(apartment)"
+            >
+              <apartment-card :apartment="apartment" :introduce="aiIntroduces[apartment.aptSeq]" />
+            </li>
+          </template>
+          <template v-else>
+            <div class="flex justify-center items-center h-full">
+              <VueSpinner size="20" class="text-primary" />
+            </div>
+          </template>
         </ul>
         <offset-pagination
           class="mt-2"
@@ -100,6 +107,7 @@ import { useUserStore } from '@/stores/user'
 import { searchPlaces } from '@/util/map'
 import { useMapStore } from '@/stores/map'
 import { APARTMENT_LIMIT_PAGE } from '@/lib/pagination'
+import { VueSpinner } from 'vue3-spinners'
 
 const sidoList = ref<string[]>([])
 const gugunList = ref<string[]>([])
@@ -113,7 +121,7 @@ const selectedGugun = ref<string>('시/군/구')
 const selectedDong = ref<string>('읍/면/동')
 const targetMinPrice = ref<string>('')
 const targetMaxPrice = ref<string>('')
-const searchWord = ref('')
+const searchWord = ref<string>('')
 provide('targetMinPrice', targetMinPrice)
 provide('targetMaxPrice', targetMaxPrice)
 provide('searchWord', searchWord)
@@ -124,6 +132,8 @@ const curPage = ref(1)
 const apartment: Ref<TApartment | null> = ref(null)
 
 const resultTitleRef = ref<HTMLElement | null>(null)
+
+const isLoading = ref(false)
 
 const route = useRoute()
 const { memberId } = useUserStore()
@@ -188,6 +198,7 @@ const eubmyundongClick = (item: string) => {
 }
 
 const search = async (page: number = 1) => {
+  isLoading.value = true
   if (isHome.value) {
     if (
       (targetMinPrice.value && !isNaturalNumber(targetMinPrice.value, true)) ||
@@ -229,15 +240,12 @@ const search = async (page: number = 1) => {
     if (introduceData) {
       aiIntroduces.value = introduceData
     }
-    searchPlaces(
-      data.data,
-      // data.data.map((item) => item.address),
-      map,
-      handleApartmentClick,
-    )
+    searchPlaces(data.data, map, handleApartmentClick)
+    isLoading.value = false
     moveScrollTo(resultTitleRef.value, 'start')
   } else {
     alert('검색 결과를 가져오는데 실패했습니다.')
+    isLoading.value = false
   }
 }
 watch(
