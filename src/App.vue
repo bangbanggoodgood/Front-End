@@ -24,6 +24,7 @@ onMounted(() => {
   if (token) {
     insertToken(token.value, userStore)
     showMain.value = true
+    router.replace({ query: {} })
   } else {
     if (route.query.accessToken) {
       sessionStorage.setItem('access_token', route.query.accessToken)
