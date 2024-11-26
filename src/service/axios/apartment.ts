@@ -1,5 +1,6 @@
 import type { TApartment, TApartmentSearch, TDeal, TPageRequest, TPageResponse } from '@/model'
 import { apartment } from './api'
+import { shuffle, take } from 'lodash'
 
 export const getApartments = async (
   query: TApartmentSearch,
@@ -14,10 +15,7 @@ export const getApartments = async (
     const res = await apartment.getApartments(query)
     res.data.aptDto = res.data.aptDto.map((apt: TApartment) => {
       if (apt.tags.length > 3) {
-        apt.tags = apt.tags
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 3)
-          .sort()
+        apt.tags = take(shuffle(apt.tags), 3).sort()
       }
       return apt
     })
