@@ -1,0 +1,11 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Map Background -->
+  <rect x="16" y="16" width="32" height="32" fill="white" stroke="#6dd3ff" stroke-width="2" />
+  
+  <!-- Location Pin -->
+  <path d="M32 24 C28 24, 24 28, 24 32 C24 40, 32 48, 32 48 C32 48, 40 40, 40 32 C40 28, 36 24, 32 24 Z" fill="#6dd3ff" />
+  <circle cx="32" cy="32" r="4" fill="white" />
+
+  <!-- House Inside -->
+  <path d="M30 28 L32 26 L34 28 V30 H30 V28 Z" fill="#6dd3ff" />
+</svg>

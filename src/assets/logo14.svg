@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <circle cx="32" cy="32" r="32" fill="#6dd3ff" />
+  
+  <!-- Rainbow -->
+  <path d="M16 32 A16 16 0 0 1 48 32" fill="none" stroke="white" stroke-width="2" />
+  <path d="M20 32 A12 12 0 0 1 44 32" fill="none" stroke="#94e4ff" stroke-width="2" />
+  <path d="M24 32 A8 8 0 0 1 40 32" fill="none" stroke="#ffffff" stroke-width="2" />
+  
+  <!-- House -->
+  <path d="M28 32 L32 28 L36 32 V36 H28 V32 Z" fill="white" />
+</svg>

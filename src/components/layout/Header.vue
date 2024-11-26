@@ -1,7 +1,11 @@
 <template>
   <header class="flex justify-between items-center py-4 px-8 bg-primary shadow-lg text-white z-50">
+    <!-- <header class="flex justify-between items-center py-4 px-8 shadow-lg text-white z-50"> -->
     <div class="flex items-center gap-6">
-      <router-link class="text-4xl" :to="{ name: 'home' }">LOGO</router-link>
+      <router-link class="text-4xl" :to="{ name: 'home' }">
+        <!-- <img src="@/assets/logo22.svg" alt="Logo" /> -->
+        LOGO
+      </router-link>
       <div class="relative">
         <button class="text-lg" @click="chatToggle">AI에게 질문하기</button>
         <ai-chat v-show="chatOpen" />
