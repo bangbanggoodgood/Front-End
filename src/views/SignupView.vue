@@ -3,14 +3,19 @@
     <h1 class="text-4xl text-[#00B2FF] mb-6">Sign Up</h1>
     <div class="flex flex-col gap-6 w-[30rem] p-8 border border-border rounded-xl bg-white">
       <div class="border border-gray-300 rounded-xl divide-y">
-        <div class="p-2 flex items-center">
-          <Input
-            class="bg-white w-full rounded-none border-none text-base"
-            type="text"
-            placeholder="아이디"
-            v-model="useId"
-          />
-          <Button variant="outline" @click="validateId">중복확인</Button>
+        <div class="p-2 flex flex-col">
+          <div class="w-full flex items-center">
+            <Input
+              class="bg-white w-full rounded-none border-none text-base"
+              type="text"
+              placeholder="아이디"
+              v-model="useId"
+            />
+            <Button variant="outline" @click="validateId">중복확인</Button>
+          </div>
+          <p v-if="validateIdResult" class="ml-3 text-xs text-green-500">
+            사용 가능한 아이디입니다.
+          </p>
         </div>
         <div class="p-2">
           <Input
@@ -24,7 +29,7 @@
           <Input
             class="bg-white w-full rounded-none border-none text-base"
             type="text"
-            placeholder="생년월일(YY.MM.DD)"
+            placeholder="생년월일(YYYYMMDD)"
             v-model="birth"
           />
         </div>
@@ -83,7 +88,7 @@
 import Button from '@/components/ui/button/Button.vue'
 import DropDownList from '@/components/ui/DropDownList.vue'
 import Input from '@/components/ui/input/Input.vue'
-import { validateBirthDate } from '@/util/date'
+import { formattedDate, validateBirthDate } from '@/util/date'
 import { jobs } from '@/lib/job'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { checkId, signUp } from '@/service/axios/user'
@@ -97,6 +102,7 @@ const jobDropDown = ref(false)
 const job = ref('')
 const jobInputRef = ref<any>(null)
 
+const validateIdResult = ref(false)
 const router = useRouter()
 
 const handleOutsideClick = (event: MouseEvent) => {
@@ -133,14 +139,20 @@ const validateId = async () => {
   const data = await checkId(useId.value)
   if (data) {
     alert('사용 가능한 아이디입니다.')
+    validateIdResult.value = true
   } else {
     alert('이미 사용중인 아이디입니다.')
+    validateIdResult.value = false
   }
 }
 
 const signup = async () => {
   if (name.value === '' || birth.value === '' || job.value === '') {
     alert('모든 항목을 입력해주세요.')
+    return
+  }
+  if (!validateIdResult.value) {
+    alert('아이디 중복확인을 해주세요.')
     return
   }
   if (!validateBirthDate(birth.value)) {
@@ -153,7 +165,7 @@ const signup = async () => {
   }
   const result = await signUp({
     name: name.value,
-    birth: birth.value,
+    birth: formattedDate(birth.value),
     sex: sex.value,
     job: job.value,
     useId: useId.value,
