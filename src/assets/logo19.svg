@@ -1,0 +1,12 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="64" height="64" rx="16" fill="#6dd3ff" />
+  
+  <!-- Stars -->
+  <circle cx="18" cy="18" r="2" fill="white" />
+  <circle cx="46" cy="14" r="2" fill="white" />
+  <circle cx="32" cy="10" r="1.5" fill="white" />
+  
+  <!-- House -->
+  <path d="M24 34 L32 28 L40 34 V44 H24 V34 Z" fill="white" />
+</svg>

@@ -1,0 +1,10 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <rect width="32" height="32" rx="8" fill="#6dd3ff" />
+  <!-- House Icon -->
+  <path d="M10 18 L16 12 L22 18 V24 H10 V18 Z" fill="white"/>
+  <!-- Cute Smile -->
+  <circle cx="14" cy="20" r="1" fill="#6dd3ff" />
+  <circle cx="18" cy="20" r="1" fill="#6dd3ff" />
+  <path d="M14 22 Q16 24, 18 22" stroke="#6dd3ff" fill="none" stroke-width="1"/>
+</svg>

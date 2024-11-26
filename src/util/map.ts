@@ -73,10 +73,15 @@ export const searchPlaces = (
       if (status === window.kakao.maps.services.Status.OK) {
         var coord = new window.kakao.maps.LatLng(result[0].y, result[0].x)
 
+        var imageSrc = '/src/assets/logo6.svg' // 마커이미지의 주소입니다
+        var imageSize = new window.kakao.maps.Size(64, 69) // 마커이미지의 크기입니다
+        var imageOption = { offset: new window.kakao.maps.Point(27, 69) } // 마커이미지의 옵션입니다
+        var markerImage = new window.kakao.maps.MarkerImage(imageSrc, imageSize, imageOption)
         // 결과값으로 받은 위치를 마커로 표시합니다
         var marker = new window.kakao.maps.Marker({
           map: mapStore.map,
           position: coord,
+          image: markerImage,
         })
         window.kakao.maps.event.addListener(marker, 'click', () => {
           handleApartmentClick(apartment)
