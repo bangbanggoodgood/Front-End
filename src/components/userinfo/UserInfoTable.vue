@@ -52,11 +52,19 @@ const props = withDefaults(defineProps<MyInfoTableProps>(), {
   isMyInfo: true,
 })
 
+const emit = defineEmits<{
+  (e: 'changeAuth', useId: string): void
+}>()
+
 const changeAUth = () => {
-  if (props.userInfo.role === userRole.admin) {
-    alert('관리자 권한을 해제하시겠습니까?')
-  } else {
-    alert('관리자 권한을 부여하시겠습니까?')
+  if (
+    confirm(
+      props.userInfo.role === userRole.admin
+        ? '관리자 권한을 해제하시겠습니까?'
+        : '관리자 권한을 부여하시겠습니까?',
+    )
+  ) {
+    emit('changeAuth', props.userInfo.useId)
   }
 }
 </script>

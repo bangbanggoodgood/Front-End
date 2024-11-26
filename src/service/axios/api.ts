@@ -123,4 +123,14 @@ export const admin = {
       },
     })
   },
+  getUserList: async (useId: string) => {
+    return axiosInstance.post('/admin/userList', {
+      useId,
+    })
+  },
+  changeAuth: async (useId: string) => {
+    return axiosInstance.post('/admin/authority', {
+      useId,
+    })
+  },
 }
