@@ -101,8 +101,7 @@ export interface TInterestRate {
 }
 
 // stats
-export type TStat = 'infra' | 'sex' | 'age' | 'price'
-export type TInfraStat = Record<'total' | TInfra, number>
+export type TStat = 'sex' | 'age' | 'price'
 export type TSexStat = {
   total: number
   male: number

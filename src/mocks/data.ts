@@ -1,6 +1,6 @@
 import { infraArray } from '@/lib/infra'
 import { userRole } from '@/lib/user'
-import type { TApartment, TDeal, TInfraStat, TSexStat, TUserInfo } from '@/model'
+import type { TAgeStat, TApartment, TDeal, TPriceState, TSexStat, TUserInfo } from '@/model'
 
 // location
 export const sidoMock: string[] = [
@@ -180,26 +180,45 @@ export const userMock: TUserInfo = {
 }
 
 // stat
-const generateInfraStatMock = (): TInfraStat => {
-  const infraStats: Partial<TInfraStat> = {}
-  let total = 0
+// const generateInfraStatMock = (): TInfraStat => {
+//   const infraStats: Partial<TInfraStat> = {}
+//   let total = 0
 
-  infraArray.forEach((infra) => {
-    const randomValue = Math.floor(Math.random() * 1000) + 1
-    infraStats[infra] = randomValue
-    total += randomValue
-  })
+//   infraArray.forEach((infra) => {
+//     const randomValue = Math.floor(Math.random() * 1000) + 1
+//     infraStats[infra] = randomValue
+//     total += randomValue
+//   })
 
-  return {
-    ...infraStats,
-    total,
-  } as TInfraStat
-}
-export const infraStatMock = generateInfraStatMock()
+//   return {
+//     ...infraStats,
+//     total,
+//   } as TInfraStat
+// }
+// export const infraStatMock = generateInfraStatMock()
 export const sexStatMock: TSexStat = {
   total: 1000,
   male: 450,
   female: 550,
+}
+export const ageStatMock: TAgeStat = {
+  total: 1,
+  '10대': 0,
+  '20대': 1,
+  '30대': 0,
+  '40대': 0,
+  '50대': 0,
+  '60대': 0,
+  '70대 이상': 0,
+}
+export const priceStatMock: TPriceState = {
+  total: 1,
+  '3억 이하': 0,
+  '3 - 4억': 0,
+  '4 - 5억': 0,
+  '5 - 6억': 0,
+  '6 - 7억': 0,
+  '7억 이상': 1,
 }
 // export const
 

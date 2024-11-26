@@ -5,9 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import { infraToKr } from '@/lib/infra'
 import { sexToKrMapper } from '@/lib/stat'
-import type { TInfra, TStat } from '@/model'
+import type { TStat } from '@/model'
 import { Chart, registerables } from 'chart.js'
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
@@ -17,38 +16,35 @@ export interface DealChartProps {
 }
 const props = defineProps<DealChartProps>()
 
-Chart.register(...registerables)
-
 const chart = ref()
 let chartInstance: any = null
 
 const keys = computed(() => Object.keys(props.data).filter((key) => key !== 'total'))
 const labels = computed(() =>
   keys.value.map((key) => {
-    if (props.type === 'infra') {
-      return infraToKr[key as TInfra]
-    }
-    return sexToKrMapper[key]
+    if (props.type === 'sex') return sexToKrMapper[key]
+    return key
   }),
 )
 const values = computed(() => keys.value.map((key) => props.data[key]))
 
-const data = {
-  datasets: [
-    {
-      data: values.value,
-    },
-  ],
-
-  labels: labels.value,
-}
+const data = computed(() => {
+  return {
+    datasets: [
+      {
+        data: values.value,
+      },
+    ],
+    labels: labels.value,
+  }
+})
 
 const options = {
   responsive: true,
   plugins: {
     title: {
       display: true,
-      text: props.type === 'infra' ? '인프라' : '성별',
+      text: props.type === 'sex' ? '성별' : props.type === 'age' ? '연령대' : '가격',
     },
   },
 }
@@ -57,17 +53,28 @@ const createChart = () => {
   if (chartInstance) {
     chartInstance.destroy()
   }
+  if (Object.keys(props.data).length === 0) return
 
   chartInstance = new Chart(chart.value, {
     type: 'pie',
-    data,
+    data: data.value,
     options,
   })
 }
 
-watch(() => props.data, createChart)
+watch(
+  () => props.data,
+  () => {
+    createChart()
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+)
 
 onMounted(() => {
+  Chart.register(...registerables)
   createChart()
 })
 onBeforeUnmount(() => {
