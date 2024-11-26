@@ -12,6 +12,15 @@ export const getApartments = async (
       query.targetMaxPrice = '-1'
     }
     const res = await apartment.getApartments(query)
+    res.data.aptDto = res.data.aptDto.map((apt: TApartment) => {
+      if (apt.tags.length > 3) {
+        apt.tags = apt.tags
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3)
+          .sort()
+      }
+      return apt
+    })
     return {
       totalRow: res.data.totalRow,
       data: res.data.aptDto,
